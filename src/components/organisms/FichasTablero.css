@@ -1,17 +1,17 @@
 .ficha {
-    position: relative;
-    margin: 10px; /* Ajusta el margen según sea necesario */
-    text-align: center; /* Centra el contenido dentro del contenedor */
-  }
-  
-  .nombre-ficha {
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 4px;
-    padding-right: 10px;
-    font-size: 12px; /* Ajusta el tamaño de fuente según sea necesario */
-    font-weight: bold; /* Opcional: cambia el peso de la fuente */
-    z-index: 1; /* Asegura que esté encima del ícono */
-  }
+  position: relative;
+  margin: 10px;
+  text-align: center;
+}
+
+.nombre-ficha {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  padding-right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 1;
+}

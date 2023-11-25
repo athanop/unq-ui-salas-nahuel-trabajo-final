@@ -1,4 +1,3 @@
-
 .tablero {
   display: flex;
   flex-direction: column;
@@ -16,7 +15,7 @@
 }
 
 .celda.disparo {
-  background-color: #e74c3c; 
+  background-color: #e74c3c;
 }
 
 .contenedor-tablero {
@@ -44,8 +43,9 @@
 }
 
 .celda-valida {
-  background-color: #aaffaa; /* Cambia este color según prefieras */
+  background-color: #aaffaa;
 }
+
 .celda-invalida {
   background-color: red;
 }
@@ -65,12 +65,12 @@
 
 .tablero-con-iconos {
   display: flex;
-  align-items: flex-start; 
-  gap: 20px; 
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .iconos-tablero {
   display: flex;
   flex-direction: column;
-  gap: 10px; 
+  gap: 10px;
 }

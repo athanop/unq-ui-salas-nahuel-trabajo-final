@@ -21,21 +21,21 @@ const FichasTablero = ({
           <button onClick={() => cambiarOrientacion('vertical')}>Vertical</button>
         </div>
         {fichas.map((ficha, index) => (
-  <div
-    key={index}
-    className="ficha"
-    draggable
-    onDragStart={(event) => handleDragStart(event, ficha)}
-  >
-    <span className="nombre-ficha">{ficha.nombre}</span>
-    <img
-      src={ficha.icono}
-      alt={`Ficha ${index}`}
-      style={{ width: '30px', height: '30px' }}
-    />
-    <span>{fichasDisponibles[ficha.icono]}</span>
-  </div>
-))}
+          <div
+            key={index}
+            className="ficha"
+            draggable
+            onDragStart={(event) => handleDragStart(event, ficha)}
+          >
+            <span className="nombre-ficha">{ficha.nombre}</span>
+            <img
+              src={ficha.icono}
+              alt={`Ficha ${index}`}
+              style={{ width: '30px', height: '30px' }}
+            />
+            <span>{fichasDisponibles[ficha.icono]}</span>
+          </div>
+        ))}
 
       </div>
     </div>
