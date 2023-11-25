@@ -1,0 +1,76 @@
+
+.tablero {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #333;
+  margin-bottom: 20px;
+}
+
+.fila {
+  display: flex;
+}
+
+
+.celda.barco {
+  background-color: #3498db;
+}
+
+.celda.disparo {
+  background-color: #e74c3c; 
+}
+
+.contenedor-tablero {
+  display: flex;
+  justify-content: center;
+}
+
+.tablero {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #333;
+}
+
+.fila {
+  display: flex;
+}
+
+.celda {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.celda-valida {
+  background-color: #aaffaa; /* Cambia este color según prefieras */
+}
+.celda-invalida {
+  background-color: red;
+}
+
+.contenedor-general {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.contenedor-tablero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tablero-con-iconos {
+  display: flex;
+  align-items: flex-start; 
+  gap: 20px; 
+}
+
+.iconos-tablero {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
