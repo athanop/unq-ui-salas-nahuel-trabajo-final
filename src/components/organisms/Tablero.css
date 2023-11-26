@@ -23,12 +23,6 @@
   justify-content: center;
 }
 
-.tablero {
-  display: flex;
-  flex-direction: column;
-  border: 2px solid #333;
-}
-
 .fila {
   display: flex;
 }

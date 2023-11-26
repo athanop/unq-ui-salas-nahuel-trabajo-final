@@ -1,0 +1,18 @@
+.numeros {
+    display: flex;
+    margin-left: 213px;
+    justify-content: space-between;
+  }
+  
+.numero {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  

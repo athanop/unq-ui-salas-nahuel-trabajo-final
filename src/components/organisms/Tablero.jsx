@@ -5,6 +5,8 @@ import IconCrucero from '../atoms/crucero.png';
 import IconLancha from '../atoms/lancha.png';
 import IconSubmarino from '../atoms/submarino.png';
 import FichasTablero from './FichasTablero';
+import Letras from '../molecules/Letras';
+import Numeros from '../molecules/Numeros';
 
 
 const Tablero = () => {
@@ -111,52 +113,58 @@ const Tablero = () => {
     };
 
 
-    return (
-        <div className="contenedor-general">
-            <div className="contenedor-tablero">
-                <div className="tablero-con-iconos">
-                    <FichasTablero
-                        fichas={[
-                            { nombre: 'Portaaviones', icono: IconPortaAviones, agujeros: 5 },
-                            { nombre: 'Crucero', icono: IconCrucero, agujeros: 4 },
-                            { nombre: 'Lancha', icono: IconLancha, agujeros: 2 },
-                            { nombre: 'Submarino', icono: IconSubmarino, agujeros: 3 },
-                        ]}
-                        orientacionIconos={orientacionIconos}
-                        cambiarOrientacion={cambiarOrientacion}
-                        handleDragStart={handleDragStart}
-                        fichasDisponibles={fichasDisponibles}
-                    />
-                    <div className={`tablero jugador`}>
-                        {tableroJugador.map((fila, filaIndex) => (
-                            <div key={filaIndex} className="fila">
-                                {fila.map((celda, celdaIndex) => (
-                                    <div
-                                        key={celdaIndex}
-                                        className={`celda ${celdasValidas.some(
-                                            (c) => c.fila === filaIndex && c.celda === celdaIndex
-                                        ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
-                                            (c) => c.fila === filaIndex && c.celda === celdaIndex
-                                        ) ? 'celda-invalida' : ''}`}
-                                        onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
-                                        onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                                    >
-                                        {celda && celda.icono && (
-                                            <img
-                                                src={celda.icono}
-                                                alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                                                style={{ width: '30px', height: '30px' }}
-                                            />
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+  const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
+  const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
+
+
+  return (
+    <div className="contenedor-general">
+      <div className="contenedor-tablero">
+      <Numeros numeros={numeros} />
+        <div className="tablero-con-iconos">
+          <FichasTablero
+            fichas={[
+              { nombre: 'Portaaviones', icono: IconPortaAviones, agujeros: 5 },
+              { nombre: 'Crucero', icono: IconCrucero, agujeros: 4 },
+              { nombre: 'Lancha', icono: IconLancha, agujeros: 2 },
+              { nombre: 'Submarino', icono: IconSubmarino, agujeros: 3 },
+            ]}
+            orientacionIconos={orientacionIconos}
+            cambiarOrientacion={cambiarOrientacion}
+            handleDragStart={handleDragStart}
+            fichasDisponibles={fichasDisponibles}
+          />
+          <Letras letras={letras} />
+          <div className={`tablero jugador`}>
+            {tableroJugador.map((fila, filaIndex) => (
+              <div key={filaIndex} className="fila">
+                {fila.map((celda, celdaIndex) => (
+                  <div
+                    key={celdaIndex}
+                    className={`celda ${celdasValidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-invalida' : ''}`}
+                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
+                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
+                  >
+                    {celda && celda.icono && (
+                      <img
+                        src={celda.icono}
+                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Tablero;
