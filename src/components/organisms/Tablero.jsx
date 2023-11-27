@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Tablero.css';
 import IconPortaAviones from '../atoms/portaaviones.png';
 import IconCrucero from '../atoms/crucero.png';
@@ -9,7 +9,7 @@ import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
 
 
-const Tablero = () => {
+const Tablero = ({esJugador, randomShips}) => {
     const [celdasValidas, setCeldasValidas] = useState([]);
     const [celdasInvalidas, setCeldasInvalidas] = useState([]);
     const [tableroJugador, setTableroJugador] = useState(Array.from({ length: 10 }, () => Array(10).fill(null)));
@@ -21,6 +21,22 @@ const Tablero = () => {
         [IconLancha]: 1,
         [IconSubmarino]: 1,
     });
+    const barcosColocados = Object.values(fichasDisponibles).every((cantidad) => cantidad === 0);
+    const [barcosBloqueados, setBarcosBloqueados] = useState(false); 
+   
+    useEffect(() => {
+      if (!esJugador) {
+        setTableroJugador(randomShips)
+      }
+    }, [esJugador]);
+
+    const bloquearBarcos = () => {
+      if (barcosColocados) {
+        setBarcosBloqueados(true);
+      } else {
+        console.log('Aún faltan barcos por colocar');
+      }
+    };
 
     const cambiarOrientacion = (orientacion) => {
         setOrientacionIconos(orientacion);
@@ -35,7 +51,7 @@ const Tablero = () => {
     const handleDragOver = (event, filaIndex, celdaIndex) => {
         event.preventDefault();
 
-        if (!fichaArrastrada) return;
+        if (!esJugador || !fichaArrastrada) return;
 
         const ficha = { ...fichaArrastrada };
         const size = ficha.agujeros;
@@ -66,7 +82,7 @@ const Tablero = () => {
 
     const handleDrop = (event, filaIndex, celdaIndex) => {
         event.preventDefault();
-        if (!fichaArrastrada) return;
+        if (!esJugador || !fichaArrastrada || barcosBloqueados) return;
 
         const nuevoTablero = JSON.parse(JSON.stringify(tableroJugador));
         const ficha = { ...fichaArrastrada };
@@ -113,14 +129,61 @@ const Tablero = () => {
     };
 
 
+    const borrarBarco = (filaIndex, celdaIndex) => {
+        const tableroActualizado = JSON.parse(JSON.stringify(tableroJugador));
+        const iconoBarco = tableroActualizado[filaIndex][celdaIndex]?.icono;
+      
+        if (!iconoBarco) return;
+      
+        const queue = [{ fila: filaIndex, celda: celdaIndex }];
+        const visited = {};
+      
+        while (queue.length > 0) {
+          const { fila, celda } = queue.pop();
+      
+          if (
+            fila >= 0 &&
+            fila < 10 &&
+            celda >= 0 &&
+            celda < 10 &&
+            tableroActualizado[fila][celda]?.icono === iconoBarco &&
+            !visited[`${fila}-${celda}`]
+          ) {
+            visited[`${fila}-${celda}`] = true;
+            tableroActualizado[fila][celda] = null;
+            queue.push({ fila: fila - 1, celda });
+            queue.push({ fila: fila + 1, celda });
+            queue.push({ fila, celda: celda - 1 });
+            queue.push({ fila, celda: celda + 1 });
+          }
+        }
+      
+        const nuevasFichasDisponibles = {
+          ...fichasDisponibles,
+          [iconoBarco]: fichasDisponibles[iconoBarco] + 1, 
+        };
+      
+        setFichasDisponibles(nuevasFichasDisponibles);
+        setTableroJugador(tableroActualizado);
+      };
+      
+      const handleCellClick = (filaIndex, celdaIndex) => {
+        if (esJugador && !barcosBloqueados) {
+            borrarBarco(filaIndex, celdaIndex);
+        }
+    };
+
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
 
   return (
     <div className="contenedor-general">
+      {esJugador && barcosColocados && (
+      <button onClick={bloquearBarcos}>LISTO</button>
+      )}
       <div className="contenedor-tablero">
-      <Numeros numeros={numeros} />
+      <Numeros numeros={numeros} esJugador={esJugador} />
         <div className="tablero-con-iconos">
           <FichasTablero
             fichas={[
@@ -133,6 +196,7 @@ const Tablero = () => {
             cambiarOrientacion={cambiarOrientacion}
             handleDragStart={handleDragStart}
             fichasDisponibles={fichasDisponibles}
+            esJugador={esJugador}
           />
           <Letras letras={letras} />
           <div className={`tablero jugador`}>
@@ -148,6 +212,7 @@ const Tablero = () => {
                     ) ? 'celda-invalida' : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
+                    onClick={() => handleCellClick(filaIndex, celdaIndex)} 
                   >
                     {celda && celda.icono && (
                       <img

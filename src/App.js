@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PublicRoute from './PublicRoute';
-import Tablero from './components/organisms/Tablero'
+import MainScreen from "./components/pages/MainScreen";
 
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PublicRoute > <Tablero /> </PublicRoute>} />
+        <Route path="/" element={<PublicRoute > <MainScreen /> </PublicRoute>} />
       </Routes>
     </BrowserRouter>
   );

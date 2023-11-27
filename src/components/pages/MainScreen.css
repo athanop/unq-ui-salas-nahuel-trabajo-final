@@ -1,0 +1,25 @@
+.main-screen-container {
+    text-align: center;
+  }
+  
+  .tableros-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tablero-container {
+    margin: 0 10px; 
+  }
+  
+
+  @media screen and (max-width: 768px) {
+    .tableros-container {
+      flex-direction: column;
+    }
+  
+    .tablero-container {
+      margin: 10px 0; 
+    }
+  }
+  
+  
