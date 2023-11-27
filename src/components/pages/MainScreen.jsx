@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Tablero from '../organisms/Tablero';
 import './MainScreen.css'; // Archivo CSS para los estilos de MainScreen
 import IconPortaAviones from '../atoms/portaaviones.png';
@@ -8,7 +8,7 @@ import IconSubmarino from '../atoms/submarino.png';
 
 const MainScreen = () => {
 
-  const colocarFichasAleatorias = () => {
+  const randomShips = () => {
     const nuevoTablero = Array.from({ length: 10 }, () => Array(10).fill(null));
   
     const fichas = [
@@ -67,7 +67,7 @@ const MainScreen = () => {
           </div>
           <div className="tablero-container">
             <h2>Tablero de la Máquina</h2>
-            <Tablero esJugador={false} randomShips={colocarFichasAleatorias()} />
+            <Tablero esJugador={false} randomShips={randomShips()} />
           </div>
         </div>
     </div>

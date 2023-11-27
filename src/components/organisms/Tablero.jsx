@@ -26,10 +26,10 @@ const Tablero = ({esJugador, randomShips}) => {
    
     useEffect(() => {
       if (!esJugador) {
-        setTableroJugador(randomShips)
+        setTableroJugador(randomShips);
       }
-    }, [esJugador]);
-
+    }, [esJugador, randomShips]);
+    
     const bloquearBarcos = () => {
       if (barcosColocados) {
         setBarcosBloqueados(true);
