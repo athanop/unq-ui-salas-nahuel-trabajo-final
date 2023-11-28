@@ -158,33 +158,39 @@ const Tablero = ({esJugador, randomShips}) => {
   const handleCellClick = (filaIndex, celdaIndex) => {
     if (!barcosBloqueados) {
       const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
+  
       if (iconoBarco) {
         borrarBarco(filaIndex, celdaIndex);
-      } else {
-        // Si no hay icono de barco, pintar la celda de rojo y bloquearla
+      } else if (!esJugador) {
         pintarCeldaRoja(filaIndex, celdaIndex);
         bloquearCelda(filaIndex, celdaIndex);
+      } else {
+        borrarBarco(filaIndex, celdaIndex);
       }
     }
   };
   
+  
   const pintarCeldaRoja = (filaIndex, celdaIndex) => {
-    const updatedTablero = [...tableroJugador]; 
-    updatedTablero[filaIndex] = [...updatedTablero[filaIndex]]; 
-    
-    updatedTablero[filaIndex][celdaIndex] = {
-      ...updatedTablero[filaIndex][celdaIndex],
-      sinBarco: true, 
-    };
-    
-    setTableroJugador(updatedTablero);
+    if (!esJugador) { 
+      const updatedTablero = [...tableroJugador];
+      updatedTablero[filaIndex] = [...updatedTablero[filaIndex]];
+  
+      updatedTablero[filaIndex][celdaIndex] = {
+        ...updatedTablero[filaIndex][celdaIndex],
+        sinBarco: true,
+      };
+  
+      setTableroJugador(updatedTablero);
+    }
   };
   
   const bloquearCelda = (filaIndex, celdaIndex) => {
-    const updatedCeldasInvalidas = [...celdasInvalidas];
-    updatedCeldasInvalidas.push({ fila: filaIndex, celda: celdaIndex }); 
-    
-    setCeldasInvalidas(updatedCeldasInvalidas); 
+    if (!esJugador) { 
+      const updatedCeldasInvalidas = [...celdasInvalidas];
+      updatedCeldasInvalidas.push({ fila: filaIndex, celda: celdaIndex });
+      setCeldasInvalidas(updatedCeldasInvalidas);
+    }
   };
   
 
