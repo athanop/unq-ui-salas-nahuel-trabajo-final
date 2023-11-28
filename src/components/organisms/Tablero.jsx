@@ -130,48 +130,39 @@ const Tablero = ({esJugador, randomShips}) => {
 
 
     const borrarBarco = (filaIndex, celdaIndex) => {
-        const tableroActualizado = JSON.parse(JSON.stringify(tableroJugador));
-        const iconoBarco = tableroActualizado[filaIndex][celdaIndex]?.icono;
+      const tableroActualizado = JSON.parse(JSON.stringify(tableroJugador));
+      const celda = tableroActualizado[filaIndex][celdaIndex];
+  
+      if (!celda || !celda.icono) return;
+  
+      tableroActualizado[filaIndex][celdaIndex] = null;
+  
+      const iconoBarco = celda.icono;
+  
+      const barcoEnCelda = tableroActualizado.some((fila) =>
+          fila.some((c) => c && c.icono === iconoBarco)
+      );
+  
+      if (!barcoEnCelda) {
+          const nuevasFichasDisponibles = {
+              ...fichasDisponibles,
+              [iconoBarco]: fichasDisponibles[iconoBarco] + 1,
+          };
+  
+          setFichasDisponibles(nuevasFichasDisponibles);
+      }
+  
+      setTableroJugador(tableroActualizado);
+  };
       
-        if (!iconoBarco) return;
-      
-        const queue = [{ fila: filaIndex, celda: celdaIndex }];
-        const visited = {};
-      
-        while (queue.length > 0) {
-          const { fila, celda } = queue.pop();
-      
-          if (
-            fila >= 0 &&
-            fila < 10 &&
-            celda >= 0 &&
-            celda < 10 &&
-            tableroActualizado[fila][celda]?.icono === iconoBarco &&
-            !visited[`${fila}-${celda}`]
-          ) {
-            visited[`${fila}-${celda}`] = true;
-            tableroActualizado[fila][celda] = null;
-            queue.push({ fila: fila - 1, celda });
-            queue.push({ fila: fila + 1, celda });
-            queue.push({ fila, celda: celda - 1 });
-            queue.push({ fila, celda: celda + 1 });
-          }
-        }
-      
-        const nuevasFichasDisponibles = {
-          ...fichasDisponibles,
-          [iconoBarco]: fichasDisponibles[iconoBarco] + 1, 
-        };
-      
-        setFichasDisponibles(nuevasFichasDisponibles);
-        setTableroJugador(tableroActualizado);
-      };
-      
-      const handleCellClick = (filaIndex, celdaIndex) => {
-        if (esJugador && !barcosBloqueados) {
+   const handleCellClick = (filaIndex, celdaIndex) => {
+    if (!barcosBloqueados) {
+        const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
+        if (iconoBarco) {
             borrarBarco(filaIndex, celdaIndex);
-        }
-    };
+        } 
+    }
+};
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
