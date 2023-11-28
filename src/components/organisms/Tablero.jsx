@@ -155,14 +155,38 @@ const Tablero = ({esJugador, randomShips}) => {
       setTableroJugador(tableroActualizado);
   };
       
-   const handleCellClick = (filaIndex, celdaIndex) => {
+  const handleCellClick = (filaIndex, celdaIndex) => {
     if (!barcosBloqueados) {
-        const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
-        if (iconoBarco) {
-            borrarBarco(filaIndex, celdaIndex);
-        } 
+      const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
+      if (iconoBarco) {
+        borrarBarco(filaIndex, celdaIndex);
+      } else {
+        // Si no hay icono de barco, pintar la celda de rojo y bloquearla
+        pintarCeldaRoja(filaIndex, celdaIndex);
+        bloquearCelda(filaIndex, celdaIndex);
+      }
     }
-};
+  };
+  
+  const pintarCeldaRoja = (filaIndex, celdaIndex) => {
+    const updatedTablero = [...tableroJugador]; 
+    updatedTablero[filaIndex] = [...updatedTablero[filaIndex]]; 
+    
+    updatedTablero[filaIndex][celdaIndex] = {
+      ...updatedTablero[filaIndex][celdaIndex],
+      sinBarco: true, 
+    };
+    
+    setTableroJugador(updatedTablero);
+  };
+  
+  const bloquearCelda = (filaIndex, celdaIndex) => {
+    const updatedCeldasInvalidas = [...celdasInvalidas];
+    updatedCeldasInvalidas.push({ fila: filaIndex, celda: celdaIndex }); 
+    
+    setCeldasInvalidas(updatedCeldasInvalidas); 
+  };
+  
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
