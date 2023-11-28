@@ -1,4 +1,3 @@
-// Nuevo componente Cell.js
 import React from 'react';
 
 const Cell = ({

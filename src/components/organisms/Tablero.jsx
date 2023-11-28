@@ -10,7 +10,6 @@ import Numeros from '../molecules/Numeros';
 import ValidacionArrastre from '../molecules/ValidacionArrastre';
 import Cell from '../molecules/Cell';
 
-
 const Tablero = ({ esJugador, randomShips }) => {
   const [celdaAtacada, setCeldaAtacada] = useState(null);
   const [celdasValidas, setCeldasValidas] = useState([]);
@@ -148,6 +147,7 @@ const Tablero = ({ esJugador, randomShips }) => {
       setCeldaAtacada(`${letra}${numero}`);
     }
   };
+
 
   const pintarCeldaRoja = (filaIndex, celdaIndex) => {
     if (!esJugador) {
