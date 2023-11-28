@@ -7,6 +7,8 @@ import IconSubmarino from '../atoms/submarino.png';
 import FichasTablero from './FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
+import ValidacionArrastre from '../molecules/ValidacionArrastre';
+import Cell from '../molecules/Cell';
 
 
 const Tablero = ({ esJugador, randomShips }) => {
@@ -49,37 +51,6 @@ const Tablero = ({ esJugador, randomShips }) => {
     }
   };
 
-  const handleDragOver = (event, filaIndex, celdaIndex) => {
-    event.preventDefault();
-
-    if (!esJugador || !fichaArrastrada) return;
-
-    const ficha = { ...fichaArrastrada };
-    const size = ficha.agujeros;
-
-    const maxFilaIndex = orientacionIconos === 'horizontal' ? filaIndex : filaIndex + size - 1;
-    const maxCeldaIndex = orientacionIconos === 'horizontal' ? celdaIndex + size - 1 : celdaIndex;
-
-    const celdasValidas = [];
-    let celdasInvalidas = [];
-
-    if (maxFilaIndex < 10 && maxCeldaIndex < 10) {
-      for (let i = filaIndex; i <= maxFilaIndex; i++) {
-        for (let j = celdaIndex; j <= maxCeldaIndex; j++) {
-          if (tableroJugador[i][j] === null) {
-            celdasValidas.push({ fila: i, celda: j });
-          } else {
-            celdasInvalidas.push({ fila: i, celda: j });
-          }
-        }
-      }
-    } else {
-      celdasInvalidas = [{ fila: filaIndex, celda: celdaIndex }];
-    }
-
-    setCeldasValidas(celdasValidas);
-    setCeldasInvalidas(celdasInvalidas);
-  };
 
   const handleDrop = (event, filaIndex, celdaIndex) => {
     event.preventDefault();
@@ -178,7 +149,6 @@ const Tablero = ({ esJugador, randomShips }) => {
     }
   };
 
-
   const pintarCeldaRoja = (filaIndex, celdaIndex) => {
     if (!esJugador) {
       const updatedTablero = [...tableroJugador];
@@ -232,28 +202,27 @@ const Tablero = ({ esJugador, randomShips }) => {
           />
           <Letras letras={letras} />
           <div className={`tablero jugador`}>
+          <ValidacionArrastre
+            esJugador={esJugador}
+            fichaArrastrada={fichaArrastrada}
+            orientacionIconos={orientacionIconos}
+            tableroJugador={tableroJugador}
+            setCeldasValidas={setCeldasValidas}
+            setCeldasInvalidas={setCeldasInvalidas}
+          />
             {tableroJugador.map((fila, filaIndex) => (
               <div key={filaIndex} className="fila">
                 {fila.map((celda, celdaIndex) => (
-                  <div
+                  <Cell
                     key={celdaIndex}
-                    className={`celda ${celdasValidas.some(
-                      (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
-                      (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-invalida' : ''}`}
-                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
-                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                    onClick={() => handleCellClick(filaIndex, celdaIndex)}
-                  >
-                    {celda && celda.icono && (
-                      <img
-                        src={celda.icono}
-                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                        style={{ width: '30px', height: '30px' }}
-                      />
-                    )}
-                  </div>
+                    filaIndex={filaIndex}
+                    celdaIndex={celdaIndex}
+                    celda={celda}
+                    celdasValidas={celdasValidas}
+                    celdasInvalidas={celdasInvalidas}
+                    handleDrop={handleDrop}
+                    handleCellClick={handleCellClick}
+                  />
                 ))}
               </div>
             ))}
