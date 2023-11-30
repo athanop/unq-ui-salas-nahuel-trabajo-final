@@ -99,3 +99,13 @@
   top: -40px; 
   left: 393px;
 }
+
+.tablero-maquina .celda.atacada {
+  background-color: yellow; 
+ 
+}
+
+/* Opcional: define un estilo para las celdas atacadas y vacías que no tienen icono */
+.tablero-maquina .celda.atacada.celda-vacia {
+  background-color: lightgrey; 
+}

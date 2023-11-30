@@ -9,7 +9,8 @@ import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
 
 
-const Tablero = ({ esJugador, randomShips }) => {
+const Tablero = ({ randomShips }) => {
+  const [esJugador, setEsJugador] = useState([]);
   const [celdasValidas, setCeldasValidas] = useState([]);
   const [celdasInvalidas, setCeldasInvalidas] = useState([]);
   const [celdasValidasMaquina, setCeldasValidasMaquina] = useState([]);
@@ -28,9 +29,8 @@ const Tablero = ({ esJugador, randomShips }) => {
   const [barcosBloqueados, setBarcosBloqueados] = useState(false);
 
   useEffect(() => {
-    if (!esJugador) {
-      setTableroMaquina(randomShips);
-    }
+    setTableroMaquina(randomShips);
+    setEsJugador(true);
   }, [esJugador, randomShips]);
 
   const bloquearBarcos = () => {
@@ -160,33 +160,41 @@ const Tablero = ({ esJugador, randomShips }) => {
 
   const handleCellClick = (filaIndex, celdaIndex) => {
     if (!barcosBloqueados) {
-      const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
-
-      if (iconoBarco) {
-        borrarBarco(filaIndex, celdaIndex);
-      } else if (!esJugador) {
-        pintarCeldaRoja(filaIndex, celdaIndex);
-        bloquearCelda(filaIndex, celdaIndex);
+      const iconoBarcoJugador = tableroJugador[filaIndex][celdaIndex]?.icono;
+      const iconoBarcoMaquina = tableroMaquina[filaIndex][celdaIndex]?.icono;
+  
+      if (esJugador) {
+        // Lógica de ataque de la máquina al tablero del jugador
+        const tableroActualMaquina = [...tableroMaquina];
+        const celdaMaquina = tableroActualMaquina[filaIndex][celdaIndex];
+  
+        if (!celdaMaquina?.icono) {
+          tableroActualMaquina[filaIndex][celdaIndex] = { atacada: true };
+          setTableroMaquina(tableroActualMaquina);
+          bloquearCelda(filaIndex, celdaIndex)
+        }
+      } else if (iconoBarcoJugador) {
+        // Si hay un barco del jugador, no se hace nada al hacer clic
+        return;
       } else {
-        borrarBarco(filaIndex, celdaIndex);
+        const tableroActual = [...tableroJugador];
+        const celda = tableroActual[filaIndex][celdaIndex];
+  
+        if (celda && celda.icono) {
+          tableroActual[filaIndex][celdaIndex] = {
+            ...tableroActual[filaIndex][celdaIndex],
+            icono: null,
+            atacada: true,
+          };
+          setTableroJugador(tableroActual);
+        } else {
+          tableroActual[filaIndex][celdaIndex] = { atacada: true };
+          setTableroJugador(tableroActual);
+        }
       }
     }
   };
-
-
-  const pintarCeldaRoja = (filaIndex, celdaIndex) => {
-    if (!esJugador) {
-      const updatedTablero = [...tableroJugador];
-      updatedTablero[filaIndex] = [...updatedTablero[filaIndex]];
-
-      updatedTablero[filaIndex][celdaIndex] = {
-        ...updatedTablero[filaIndex][celdaIndex],
-        sinBarco: true,
-      };
-
-      setTableroJugador(updatedTablero);
-    }
-  };
+  
 
   const bloquearCelda = (filaIndex, celdaIndex) => {
     if (!esJugador) {
@@ -205,7 +213,7 @@ const Tablero = ({ esJugador, randomShips }) => {
     <div className="contenedor-general">
       <div className="contenedor-tablero">
         <div className="numeros-jugador">
-          <Numeros numeros={numeros} esJugador={true} />
+          <Numeros numeros={numeros} esJugador={esJugador} />
         </div>
         <div className="tablero-con-iconos">
           <FichasTablero
@@ -219,9 +227,9 @@ const Tablero = ({ esJugador, randomShips }) => {
             cambiarOrientacion={cambiarOrientacion}
             handleDragStart={handleDragStart}
             fichasDisponibles={fichasDisponibles}
-            esJugador={true}
-            barcosColocados = {barcosColocados}
-            bloquearBarcos = {bloquearBarcos}
+            esJugador={esJugador}
+            barcosColocados={barcosColocados}
+            bloquearBarcos={bloquearBarcos}
           />
           <Letras letras={letras} />
           <div className={`tablero-jugador`}>
@@ -251,7 +259,7 @@ const Tablero = ({ esJugador, randomShips }) => {
               </div>
             ))}
           </div>
-               
+
           <Letras letras={letras} />
           <div className="numeros-maquina">
             <Numeros numeros={numeros} esJugador={esJugador} />
@@ -262,11 +270,13 @@ const Tablero = ({ esJugador, randomShips }) => {
                 {fila.map((celda, celdaIndex) => (
                   <div
                     key={celdaIndex}
-                    className={`celda ${celdasValidasMaquina.some(
-                      (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-valida' : ''} ${celdasInvalidasMaquina.some(
-                      (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-invalida' : ''}`}
+                    className={`celda ${celdasValidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                        ? 'celda-valida'
+                        : ''
+                      } ${celdasInvalidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                        ? 'celda-invalida'
+                        : ''
+                      } ${!celda?.icono ? (celda?.atacada ? 'atacada' : 'celda-vacia') : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                     onClick={() => handleCellClick(filaIndex, celdaIndex)}
@@ -283,6 +293,8 @@ const Tablero = ({ esJugador, randomShips }) => {
               </div>
             ))}
           </div>
+
+
         </div>
       </div>
     </div>
