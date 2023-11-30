@@ -80,9 +80,6 @@
   font-size: 14px;
   color: #333;
 }
-.celda[atacada="true"] {
-  background-color: red; 
-}
 
 .contenedor-tablero {
   position: relative;
@@ -100,8 +97,7 @@
   left: 393px;
 }
 
-
-
 .atacada {
   background-color: gray; 
 }
+
