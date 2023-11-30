@@ -201,9 +201,6 @@ const Tablero = ({ esJugador, randomShips }) => {
 
   return (
     <div className="contenedor-general">
-      {barcosColocados && (
-        <button onClick={bloquearBarcos}>LISTO</button>
-      )}
       <div className="contenedor-tablero">
         <div className="numeros-jugador">
           <Numeros numeros={numeros} esJugador={true} />
@@ -221,6 +218,8 @@ const Tablero = ({ esJugador, randomShips }) => {
             handleDragStart={handleDragStart}
             fichasDisponibles={fichasDisponibles}
             esJugador={true}
+            barcosColocados = {barcosColocados}
+            bloquearBarcos = {bloquearBarcos}
           />
           <Letras letras={letras} />
           <div className={`tablero-jugador`}>

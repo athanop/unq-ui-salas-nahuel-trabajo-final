@@ -1,5 +1,5 @@
 import React from 'react';
-import './FichasTablero.css';
+import styles from './FichasTablero.css';
 import IconoGiro from '../atoms/rotate.png';
 
 const FichasTablero = ({
@@ -8,7 +8,9 @@ const FichasTablero = ({
   cambiarOrientacion,
   handleDragStart,
   fichasDisponibles,
-  esJugador
+  esJugador,
+  barcosColocados,
+  bloquearBarcos
 }) => {
   const estiloIconos = {
     display: orientacionIconos === 'horizontal' ? 'flex' : 'block',
@@ -38,6 +40,9 @@ const FichasTablero = ({
               <span>{fichasDisponibles[ficha.icono]}</span>
             </div>
           ))}
+           <div> {barcosColocados && (
+          <button onClick={bloquearBarcos} styles={styles}>LISTO</button>
+        )}</div>
         </div>
       )}
     </div>
