@@ -132,68 +132,52 @@ const Tablero = ({ randomShips }) => {
   };
 
 
-  const borrarBarco = (filaIndex, celdaIndex) => {
-    const tableroActualizado = JSON.parse(JSON.stringify(tableroJugador));
+  const borrarBarco = (filaIndex, celdaIndex, tablero, esJugador, fichasDisponibles) => {
+    const tableroActualizado = JSON.parse(JSON.stringify(tablero));
     const celda = tableroActualizado[filaIndex][celdaIndex];
-
-    if (!celda || !celda.icono) return;
-
+  
+    if (!celda || !celda.icono) return tablero;
+  
     tableroActualizado[filaIndex][celdaIndex] = null;
-
+  
     const iconoBarco = celda.icono;
-
+  
     const barcoEnCelda = tableroActualizado.some((fila) =>
       fila.some((c) => c && c.icono === iconoBarco)
     );
-
-    if (!barcoEnCelda) {
+  
+    if (!barcoEnCelda && esJugador) {
       const nuevasFichasDisponibles = {
         ...fichasDisponibles,
-        [iconoBarco]: fichasDisponibles[iconoBarco] + 1,
+        [iconoBarco]: (fichasDisponibles[iconoBarco] || 0) + 1,
       };
-
+  
       setFichasDisponibles(nuevasFichasDisponibles);
     }
-
-    setTableroJugador(tableroActualizado);
+  
+    return tableroActualizado;
   };
-
-  const handleCellClick = (filaIndex, celdaIndex) => {
+  
+  const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     if (!barcosBloqueados) {
       const iconoBarcoJugador = tableroJugador[filaIndex][celdaIndex]?.icono;
-      const iconoBarcoMaquina = tableroMaquina[filaIndex][celdaIndex]?.icono;
-  
-      if (esJugador) {
-        // Lógica de ataque de la máquina al tablero del jugador
-        const tableroActualMaquina = [...tableroMaquina];
-        const celdaMaquina = tableroActualMaquina[filaIndex][celdaIndex];
-  
-        if (!celdaMaquina?.icono) {
-          tableroActualMaquina[filaIndex][celdaIndex] = { atacada: true };
-          setTableroMaquina(tableroActualMaquina);
-          bloquearCelda(filaIndex, celdaIndex)
-        }
-      } else if (iconoBarcoJugador) {
-        // Si hay un barco del jugador, no se hace nada al hacer clic
-        return;
-      } else {
-        const tableroActual = [...tableroJugador];
-        const celda = tableroActual[filaIndex][celdaIndex];
-  
-        if (celda && celda.icono) {
-          tableroActual[filaIndex][celdaIndex] = {
-            ...tableroActual[filaIndex][celdaIndex],
-            icono: null,
-            atacada: true,
-          };
-          setTableroJugador(tableroActual);
+      if (iconoBarcoJugador && tablero==tableroJugador) {
+          const nuevoTableroJugador = borrarBarco(filaIndex, celdaIndex, tableroJugador, esJugador, fichasDisponibles);
+          setTableroJugador(nuevoTableroJugador);
         } else {
-          tableroActual[filaIndex][celdaIndex] = { atacada: true };
-          setTableroJugador(tableroActual);
+          // Lógica adicional si el jugador hace clic en una celda vacía en su tablero
         }
+      } else {
+        // Lógica para el tableroMaquina
       }
-    }
+    
   };
+  
+  
+
+
+  
+
   
 
   const bloquearCelda = (filaIndex, celdaIndex) => {
@@ -245,7 +229,7 @@ const Tablero = ({ randomShips }) => {
                     ) ? 'celda-invalida' : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                    onClick={() => handleCellClick(filaIndex, celdaIndex)}
+                    onClick={() => handleCellClick(filaIndex, celdaIndex, tableroJugador)}
                   >
                     {celda && celda.icono && (
                       <img
@@ -279,7 +263,7 @@ const Tablero = ({ randomShips }) => {
                       } ${!celda?.icono ? (celda?.atacada ? 'atacada' : 'celda-vacia') : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                    onClick={() => handleCellClick(filaIndex, celdaIndex)}
+                    onClick={() => handleCellClick(filaIndex, celdaIndex, tableroMaquina)}
                   >
                     {celda && celda.icono && (
                       <img
