@@ -1,8 +1,8 @@
 import React from 'react';
 import './Numeros.css'
 
-const Numeros = ({ numeros, esJugador }) => (
-  <div className={`numeros ${esJugador ? '' : 'numeros-maquina'}`}>
+const Numeros = ({numeros}) => (
+  <div className={`numeros`}>
     {numeros.map((numero, index) => (
       <div key={index} className="numero">
         {numero}

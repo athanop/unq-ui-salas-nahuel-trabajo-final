@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import style from './Tablero.css';
+import './Tablero.css';
 import IconPortaAviones from '../atoms/portaaviones.png';
 import IconCrucero from '../atoms/crucero.png';
 import IconLancha from '../atoms/lancha.png';
@@ -7,13 +7,12 @@ import IconSubmarino from '../atoms/submarino.png';
 import FichasTablero from './FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
-import ValidacionArrastre from '../molecules/ValidacionArrastre';
-import Cell from '../molecules/Cell';
+
 
 const Tablero = ({ esJugador, randomShips }) => {
-  const [celdaAtacada, setCeldaAtacada] = useState(null);
   const [celdasValidas, setCeldasValidas] = useState([]);
   const [celdasInvalidas, setCeldasInvalidas] = useState([]);
+  const [tableroMaquina, setTableroMaquina] = useState(Array.from({ length: 10 }, () => Array(10).fill(null)));
   const [tableroJugador, setTableroJugador] = useState(Array.from({ length: 10 }, () => Array(10).fill(null)));
   const [fichaArrastrada, setFichaArrastrada] = useState(null);
   const [orientacionIconos, setOrientacionIconos] = useState('horizontal');
@@ -28,7 +27,7 @@ const Tablero = ({ esJugador, randomShips }) => {
 
   useEffect(() => {
     if (!esJugador) {
-      setTableroJugador(randomShips);
+      setTableroMaquina(randomShips);
     }
   }, [esJugador, randomShips]);
 
@@ -50,10 +49,41 @@ const Tablero = ({ esJugador, randomShips }) => {
     }
   };
 
+  const handleDragOver = (event, filaIndex, celdaIndex) => {
+    event.preventDefault();
+
+    if (!fichaArrastrada) return;
+
+    const ficha = { ...fichaArrastrada };
+    const size = ficha.agujeros;
+
+    const maxFilaIndex = orientacionIconos === 'horizontal' ? filaIndex : filaIndex + size - 1;
+    const maxCeldaIndex = orientacionIconos === 'horizontal' ? celdaIndex + size - 1 : celdaIndex;
+
+    const celdasValidas = [];
+    let celdasInvalidas = [];
+
+    if (maxFilaIndex < 10 && maxCeldaIndex < 10) {
+      for (let i = filaIndex; i <= maxFilaIndex; i++) {
+        for (let j = celdaIndex; j <= maxCeldaIndex; j++) {
+          if (tableroJugador[i][j] === null) {
+            celdasValidas.push({ fila: i, celda: j });
+          } else {
+            celdasInvalidas.push({ fila: i, celda: j });
+          }
+        }
+      }
+    } else {
+      celdasInvalidas = [{ fila: filaIndex, celda: celdaIndex }];
+    }
+
+    setCeldasValidas(celdasValidas);
+    setCeldasInvalidas(celdasInvalidas);
+  };
 
   const handleDrop = (event, filaIndex, celdaIndex) => {
     event.preventDefault();
-    if (!esJugador || !fichaArrastrada || barcosBloqueados) return;
+    if (!fichaArrastrada || barcosBloqueados) return;
 
     const nuevoTablero = JSON.parse(JSON.stringify(tableroJugador));
     const ficha = { ...fichaArrastrada };
@@ -126,9 +156,6 @@ const Tablero = ({ esJugador, randomShips }) => {
     setTableroJugador(tableroActualizado);
   };
 
-  const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
-  const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
-
   const handleCellClick = (filaIndex, celdaIndex) => {
     if (!barcosBloqueados) {
       const iconoBarco = tableroJugador[filaIndex][celdaIndex]?.icono;
@@ -141,10 +168,6 @@ const Tablero = ({ esJugador, randomShips }) => {
       } else {
         borrarBarco(filaIndex, celdaIndex);
       }
-      const letra = letras[filaIndex];
-      const numero = numeros[celdaIndex];
-
-      setCeldaAtacada(`${letra}${numero}`);
     }
   };
 
@@ -172,20 +195,19 @@ const Tablero = ({ esJugador, randomShips }) => {
   };
 
 
+  const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
+  const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
+
 
   return (
     <div className="contenedor-general">
-      <div className="info-celda-atacada" style={style}>
-        {celdaAtacada && (
-          <p>El disparo ocurrió en: {celdaAtacada}</p>
-        )}
-      </div>
-
-      {esJugador && barcosColocados && (
+      {barcosColocados && (
         <button onClick={bloquearBarcos}>LISTO</button>
       )}
       <div className="contenedor-tablero">
-        <Numeros numeros={numeros} esJugador={esJugador} />
+        <div className="numeros-jugador">
+          <Numeros numeros={numeros} esJugador={true} />
+        </div>
         <div className="tablero-con-iconos">
           <FichasTablero
             fichas={[
@@ -198,31 +220,64 @@ const Tablero = ({ esJugador, randomShips }) => {
             cambiarOrientacion={cambiarOrientacion}
             handleDragStart={handleDragStart}
             fichasDisponibles={fichasDisponibles}
-            esJugador={esJugador}
+            esJugador={true}
           />
           <Letras letras={letras} />
-          <div className={`tablero jugador`}>
-          <ValidacionArrastre
-            esJugador={esJugador}
-            fichaArrastrada={fichaArrastrada}
-            orientacionIconos={orientacionIconos}
-            tableroJugador={tableroJugador}
-            setCeldasValidas={setCeldasValidas}
-            setCeldasInvalidas={setCeldasInvalidas}
-          />
+          <div className={`tablero-jugador`}>
             {tableroJugador.map((fila, filaIndex) => (
               <div key={filaIndex} className="fila">
                 {fila.map((celda, celdaIndex) => (
-                  <Cell
+                  <div
                     key={celdaIndex}
-                    filaIndex={filaIndex}
-                    celdaIndex={celdaIndex}
-                    celda={celda}
-                    celdasValidas={celdasValidas}
-                    celdasInvalidas={celdasInvalidas}
-                    handleDrop={handleDrop}
-                    handleCellClick={handleCellClick}
-                  />
+                    className={`celda ${celdasValidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-invalida' : ''}`}
+                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
+                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
+                    onClick={() => handleCellClick(filaIndex, celdaIndex)}
+                  >
+                    {celda && celda.icono && (
+                      <img
+                        src={celda.icono}
+                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+               
+          <Letras letras={letras} />
+          <div className="numeros-maquina">
+            <Numeros numeros={numeros} esJugador={esJugador} />
+          </div>
+          <div className={`tablero-maquina`}>
+            {tableroMaquina.map((fila, filaIndex) => (
+              <div key={filaIndex} className="fila">
+                {fila.map((celda, celdaIndex) => (
+                  <div
+                    key={celdaIndex}
+                    className={`celda ${celdasValidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
+                      (c) => c.fila === filaIndex && c.celda === celdaIndex
+                    ) ? 'celda-invalida' : ''}`}
+                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
+                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
+                    onClick={() => handleCellClick(filaIndex, celdaIndex)}
+                  >
+                    {celda && celda.icono && (
+                      <img
+                        src={celda.icono}
+                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    )}
+                  </div>
                 ))}
               </div>
             ))}
