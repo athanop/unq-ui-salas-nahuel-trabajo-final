@@ -4,6 +4,7 @@ import IconPortaAviones from '../atoms/portaaviones.png';
 import IconCrucero from '../atoms/crucero.png';
 import IconLancha from '../atoms/lancha.png';
 import IconSubmarino from '../atoms/submarino.png';
+import IconExplode from '../atoms/explode.png'
 import FichasTablero from './FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
@@ -135,51 +136,59 @@ const Tablero = ({ randomShips }) => {
   const borrarBarco = (filaIndex, celdaIndex, tablero, esJugador, fichasDisponibles) => {
     const tableroActualizado = JSON.parse(JSON.stringify(tablero));
     const celda = tableroActualizado[filaIndex][celdaIndex];
-  
+
     if (!celda || !celda.icono) return tablero;
-  
+
     tableroActualizado[filaIndex][celdaIndex] = null;
-  
+
     const iconoBarco = celda.icono;
-  
+
     const barcoEnCelda = tableroActualizado.some((fila) =>
       fila.some((c) => c && c.icono === iconoBarco)
     );
-  
+
     if (!barcoEnCelda && esJugador) {
       const nuevasFichasDisponibles = {
         ...fichasDisponibles,
         [iconoBarco]: (fichasDisponibles[iconoBarco] || 0) + 1,
       };
-  
+
       setFichasDisponibles(nuevasFichasDisponibles);
     }
-  
+
     return tableroActualizado;
   };
-  
+
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     if (!barcosBloqueados) {
       const iconoBarcoJugador = tableroJugador[filaIndex][celdaIndex]?.icono;
       if (iconoBarcoJugador && tablero === tableroJugador) {
+        // Lógica para el tablero del jugador
         const nuevoTableroJugador = borrarBarco(filaIndex, celdaIndex, tableroJugador, esJugador, fichasDisponibles);
         setTableroJugador(nuevoTableroJugador);
       } else if (!tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
+        // Lógica para el tablero de la máquina cuando se hace clic en una celda vacía
         const nuevoTableroMaquina = [...tablero];
         nuevoTableroMaquina[filaIndex][celdaIndex] = { ...nuevoTableroMaquina[filaIndex][celdaIndex], atacada: true };
+        setTableroMaquina(nuevoTableroMaquina);
+      } else if (tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
+        // Lógica para el tablero de la máquina cuando se hace clic en una celda con un barco
+        const nuevoTableroMaquina = [...tablero];
+        nuevoTableroMaquina[filaIndex][celdaIndex] = { ...nuevoTableroMaquina[filaIndex][celdaIndex], explosion: true };
         setTableroMaquina(nuevoTableroMaquina);
       }
     }
   };
-  
-  
-
-  
 
 
-  
 
-  
+
+
+
+
+
+
+
 
   const bloquearCelda = (filaIndex, celdaIndex) => {
     if (!esJugador) {
@@ -227,7 +236,7 @@ const Tablero = ({ randomShips }) => {
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
                     ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-invalida' : ''} ${tableroMaquina[filaIndex][celdaIndex]?.icono ? '' : (tableroMaquina[filaIndex][celdaIndex]?.atacada ? '' : 'celda-vacia')}`}                   
+                    ) ? 'celda-invalida' : ''} ${tableroMaquina[filaIndex][celdaIndex]?.icono ? '' : (tableroMaquina[filaIndex][celdaIndex]?.atacada ? '' : 'celda-vacia')}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                     onClick={() => handleCellClick(filaIndex, celdaIndex, tableroJugador)}
@@ -258,19 +267,20 @@ const Tablero = ({ randomShips }) => {
                     className={`celda ${celdasValidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
                       ? 'celda-valida'
                       : ''} ${celdasInvalidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                      ? 'celda-invalida'
-                      : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''}`}                    
+                        ? 'celda-invalida'
+                        : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                     onClick={() => handleCellClick(filaIndex, celdaIndex, tableroMaquina)}
                   >
                     {celda && celda.icono && (
                       <img
-                        src={celda.icono}
-                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                        src={celda.explosion ? IconExplode : celda.icono}
+                        alt={celda.explosion ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
                         style={{ width: '30px', height: '30px' }}
                       />
                     )}
+
                   </div>
                 ))}
               </div>
