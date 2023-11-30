@@ -161,18 +161,19 @@ const Tablero = ({ randomShips }) => {
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     if (!barcosBloqueados) {
       const iconoBarcoJugador = tableroJugador[filaIndex][celdaIndex]?.icono;
-      if (iconoBarcoJugador && tablero==tableroJugador) {
-          const nuevoTableroJugador = borrarBarco(filaIndex, celdaIndex, tableroJugador, esJugador, fichasDisponibles);
-          setTableroJugador(nuevoTableroJugador);
-        } else {
-          // Lógica adicional si el jugador hace clic en una celda vacía en su tablero
-        }
-      } else {
-        // Lógica para el tableroMaquina
+      if (iconoBarcoJugador && tablero === tableroJugador) {
+        const nuevoTableroJugador = borrarBarco(filaIndex, celdaIndex, tableroJugador, esJugador, fichasDisponibles);
+        setTableroJugador(nuevoTableroJugador);
+      } else if (!tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
+        const nuevoTableroMaquina = [...tablero];
+        nuevoTableroMaquina[filaIndex][celdaIndex] = { ...nuevoTableroMaquina[filaIndex][celdaIndex], atacada: true };
+        setTableroMaquina(nuevoTableroMaquina);
       }
-    
+    }
   };
   
+  
+
   
 
 
@@ -226,7 +227,7 @@ const Tablero = ({ randomShips }) => {
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
                     ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-invalida' : ''}`}
+                    ) ? 'celda-invalida' : ''} ${tableroMaquina[filaIndex][celdaIndex]?.icono ? '' : (tableroMaquina[filaIndex][celdaIndex]?.atacada ? '' : 'celda-vacia')}`}                   
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                     onClick={() => handleCellClick(filaIndex, celdaIndex, tableroJugador)}
@@ -255,12 +256,10 @@ const Tablero = ({ randomShips }) => {
                   <div
                     key={celdaIndex}
                     className={`celda ${celdasValidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                        ? 'celda-valida'
-                        : ''
-                      } ${celdasInvalidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                        ? 'celda-invalida'
-                        : ''
-                      } ${!celda?.icono ? (celda?.atacada ? 'atacada' : 'celda-vacia') : ''}`}
+                      ? 'celda-valida'
+                      : ''} ${celdasInvalidasMaquina.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                      ? 'celda-invalida'
+                      : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''}`}                    
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                     onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                     onClick={() => handleCellClick(filaIndex, celdaIndex, tableroMaquina)}

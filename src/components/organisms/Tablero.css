@@ -100,11 +100,8 @@
   left: 393px;
 }
 
-.tablero-maquina .celda.atacada {
-  background-color: yellow; 
- 
-}
 
-.tablero-maquina .celda.atacada.celda-vacia {
-  background-color: lightgrey; 
+
+.atacada {
+  background-color: gray; 
 }
