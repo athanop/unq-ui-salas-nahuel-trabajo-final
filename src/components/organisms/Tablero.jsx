@@ -12,6 +12,8 @@ import Numeros from '../molecules/Numeros';
 const Tablero = ({ esJugador, randomShips }) => {
   const [celdasValidas, setCeldasValidas] = useState([]);
   const [celdasInvalidas, setCeldasInvalidas] = useState([]);
+  const [celdasValidasMaquina, setCeldasValidasMaquina] = useState([]);
+  const [celdasInvalidasMaquina, setCeldasInvalidasMaquina] = useState([]);
   const [tableroMaquina, setTableroMaquina] = useState(Array.from({ length: 10 }, () => Array(10).fill(null)));
   const [tableroJugador, setTableroJugador] = useState(Array.from({ length: 10 }, () => Array(10).fill(null)));
   const [fichaArrastrada, setFichaArrastrada] = useState(null);
@@ -260,9 +262,9 @@ const Tablero = ({ esJugador, randomShips }) => {
                 {fila.map((celda, celdaIndex) => (
                   <div
                     key={celdaIndex}
-                    className={`celda ${celdasValidas.some(
+                    className={`celda ${celdasValidasMaquina.some(
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
-                    ) ? 'celda-valida' : ''} ${celdasInvalidas.some(
+                    ) ? 'celda-valida' : ''} ${celdasInvalidasMaquina.some(
                       (c) => c.fila === filaIndex && c.celda === celdaIndex
                     ) ? 'celda-invalida' : ''}`}
                     onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
