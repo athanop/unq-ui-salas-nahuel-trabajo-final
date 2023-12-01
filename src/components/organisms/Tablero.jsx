@@ -8,7 +8,6 @@ import IconExplode from '../atoms/explode.png'
 import FichasTablero from './FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
-import Movimientos from '../molecules/Movimiento';
 import Jugadas from './Jugadas';
 
 const Tablero = ({ randomShips }) => {
