@@ -8,7 +8,8 @@ import IconExplode from '../atoms/explode.png'
 import FichasTablero from './FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
-
+import Movimientos from '../molecules/Movimiento';
+import Jugadas from './Jugadas';
 
 const Tablero = ({ randomShips }) => {
   const [mensajeAtaqueMaquina, setMensajeAtaqueMaquina] = useState('');
@@ -137,55 +138,34 @@ const Tablero = ({ randomShips }) => {
   };
 
 
-  const borrarBarco = (filaIndex, celdaIndex, tablero, esJugador, fichasDisponibles) => {
-    const tableroActualizado = JSON.parse(JSON.stringify(tablero));
-    const celda = tableroActualizado[filaIndex][celdaIndex];
-
-    if (!celda || !celda.icono) return tablero;
-
-    tableroActualizado[filaIndex][celdaIndex] = null;
-
-    const iconoBarco = celda.icono;
-
-    const barcoEnCelda = tableroActualizado.some((fila) =>
-      fila.some((c) => c && c.icono === iconoBarco)
-    );
-
-    if (!barcoEnCelda && esJugador) {
-      const nuevasFichasDisponibles = {
-        ...fichasDisponibles,
-        [iconoBarco]: (fichasDisponibles[iconoBarco] || 0) + 1,
-      };
-
-      setFichasDisponibles(nuevasFichasDisponibles);
-    }
-
-    return tableroActualizado;
+  const handleResetTablero = () => {
+    setFichasDisponibles({
+      [IconPortaAviones]: 1,
+      [IconCrucero]: 1,
+      [IconLancha]: 1,
+      [IconSubmarino]: 1,
+    });
+    setTableroJugador(Array.from({ length: 10 }, () => Array(10).fill(null)));
   };
+  
+  
+  
+  
 
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     if (!barcosBloqueados && turnoJugador) {
-      const iconoBarcoJugador = tableroJugador[filaIndex][celdaIndex]?.icono;
-
-      if (iconoBarcoJugador && tablero === tableroJugador) {
-        const nuevoTableroJugador = borrarBarco(filaIndex, celdaIndex, tableroJugador, esJugador, fichasDisponibles);
-        setTableroJugador(nuevoTableroJugador);
-        // Código para eliminar barcos mal ubicados
-      } else if (!tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
-        // Lógica para el tablero de la máquina cuando se hace clic en una celda vacía y es el turno del jugador
+       if (!tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
         const nuevoTableroMaquina = [...tablero];
         nuevoTableroMaquina[filaIndex][celdaIndex] = { ...nuevoTableroMaquina[filaIndex][celdaIndex], atacada: true };
         setTableroMaquina(nuevoTableroMaquina);
         setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
-        // Cambiar al turno del jugador después de generar la celda aleatoria
         setTimeout(() => {
           generarCeldaAleatoria();
           setMovimientosMaquina([...movimientosMaquina, { filaIndex, celdaIndex }]);
           setTurnoJugador(true);
         }, 1000);
-        setTurnoJugador(false); // cambiar al turno de la máquina después del turno del jugador
+        setTurnoJugador(false);
       } else if (tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
-        // Lógica para el tablero de la máquina cuando se hace clic en una celda con barco y es el turno del jugador
         const nuevoTableroMaquina = JSON.parse(JSON.stringify(tableroMaquina));
         const celda = nuevoTableroMaquina[filaIndex][celdaIndex];
 
@@ -194,25 +174,19 @@ const Tablero = ({ randomShips }) => {
         } else {
           nuevoTableroMaquina[filaIndex][celdaIndex] = { ...celda, atacada: true };
         }
-
         setTableroMaquina(nuevoTableroMaquina);
         setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
-        // Cambiar al turno del jugador después de generar la celda aleatoria
         setTimeout(() => {
           generarCeldaAleatoria();
           setTurnoJugador(true);
           setMovimientosMaquina([...movimientosMaquina, { filaIndex, celdaIndex }]);
         }, 1000);
-        setTurnoJugador(false); // Cambiar al turno de la máquina después del turno del jugador
+        setTurnoJugador(false);
       }
     }
   };
 
 
-
-
-
-  /////////////////////////////////// LOGICA PARA ATAQUE MAQUINA
   const generarCeldaAleatoria = () => {
     const filaAleatoria = Math.floor(Math.random() * tableroJugador.length);
     const celdaAleatoria = Math.floor(Math.random() * tableroJugador[filaAleatoria].length);
@@ -228,35 +202,18 @@ const Tablero = ({ randomShips }) => {
   };
 
 
-
-
-
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
-
   return (
     <div className="contenedor-general">{mensajeAtaqueMaquina && <p>{mensajeAtaqueMaquina}</p>}
-
+    <Jugadas
+      movimientosJugador={movimientosJugador}
+      movimientosMaquina={movimientosMaquina}
+      letras={letras}
+      numeros={numeros}
+    />
       <div className="contenedor-tablero">
-        <div className="movimientos">
-          <div className="movimientos-jugador">
-            <h3>Movimientos del Jugador:</h3>
-            <ul>
-              {movimientosJugador.map((movimiento, index) => (
-                <li key={index}>{`Letra: ${letras[movimiento.filaIndex]}, Número: ${numeros[movimiento.celdaIndex]}`}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="movimientos-maquina">
-            <h3>Movimientos de la Máquina:</h3>
-            <ul>
-              {movimientosMaquina.map((movimiento, index) => (
-                <li key={index}>{`Letra: ${letras[movimiento.filaIndex]}, Número: ${numeros[movimiento.celdaIndex]}`}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
         <div className="numeros-jugador">
           <Numeros numeros={numeros} esJugador={esJugador} />
         </div>
@@ -275,6 +232,7 @@ const Tablero = ({ randomShips }) => {
             esJugador={esJugador}
             barcosColocados={barcosColocados}
             bloquearBarcos={bloquearBarcos}
+            resetTablero={handleResetTablero}
           />
           <Letras letras={letras} />
           <div className={`tablero-jugador`}>

@@ -58,3 +58,20 @@ button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+.button-reset,.start-button {
+  background-color: #3498db;
+  color: #fff; 
+  font-size: 12px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer; 
+}
+
+.button-reset:hover {
+  background-color: #2980b9; 
+}
+
+.start-button:hover {
+  background-color: #1c5378; 
+}

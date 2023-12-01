@@ -10,7 +10,8 @@ const FichasTablero = ({
   fichasDisponibles,
   esJugador,
   barcosColocados,
-  bloquearBarcos
+  bloquearBarcos,
+  resetTablero
 }) => {
   const estiloIconos = {
     display: orientacionIconos === 'horizontal' ? 'flex' : 'block',
@@ -19,7 +20,7 @@ const FichasTablero = ({
 
   return (
     <div className="iconos" style={estiloIconos}>
-      {esJugador && ( 
+      {esJugador && (
         <div className="contenedor-iconos">
           <div className="icono-giro" onClick={() => cambiarOrientacion(orientacionIconos === 'horizontal' ? 'vertical' : 'horizontal')}>
             <img src={IconoGiro} alt="Cambiar orientación" />
@@ -39,10 +40,12 @@ const FichasTablero = ({
               />
               <span>{fichasDisponibles[ficha.icono]}</span>
             </div>
-          ))}
-           <div> {barcosColocados && (
-          <button onClick={bloquearBarcos} styles={styles}>LISTO</button>
-        )}</div>
+          ))}<div>
+            <button className="button-reset" onClick={resetTablero}>RESET</button>
+          </div>
+          <div> {barcosColocados && (
+            <button className="start-button" onClick={bloquearBarcos} styles={styles}>START</button>
+          )}</div>
         </div>
       )}
     </div>

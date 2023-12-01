@@ -10,7 +10,7 @@ const MainScreen = () => {
   <div className="main-screen-container">
     <div className="tableros-container">
       <div className="tablero-container" key="jugador">
-        <Tablero esJugador={false} randomShips={RandomShip()}/>
+        <Tablero randomShips={RandomShip()}/>
       </div>
     </div>
   </div>
