@@ -1,27 +1,65 @@
 .main-screen-container {
-    text-align: center;
-  }
-  
-  .tableros-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .tablero-container {
-    margin: 0 10px; 
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+.menu {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  @media screen and (max-width: 768px) {
-    .tableros-container {
-      flex-direction: column;
-    }
-  
-    .tablero-container {
-      margin: 10px 0; 
-    }
-  }
+.menu button {
+  padding: 12px 24px;
+  font-size: 20px;
+  background-color: #3498db;
+  color: #fff;
+  border: 2px solid #3498db; 
+  border-radius: 8px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
+  width: 150px;
+}
 
-  
-  
-  
+.menu button:hover {
+  background-color: #09314d;
+  border-color: #09314d; 
+}
+
+
+.tableros-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.tablero-container {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.body-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('../atoms/fondo.jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+
+.game-title {
+  font-size: 3rem;
+  color: #fff;
+  text-align: center; 
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  font-family: 'Arial', sans-serif; 
+}

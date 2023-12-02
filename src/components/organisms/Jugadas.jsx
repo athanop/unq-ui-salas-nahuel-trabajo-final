@@ -1,17 +1,17 @@
 import React from 'react';
 import './Jugadas.css';
-import Movimientos from '../molecules/Movimiento';
+import Movimiento from '../molecules/Movimiento';
 
 const Jugadas = ({ movimientosJugador, movimientosMaquina, letras, numeros }) => {
     return (
       <div className="contenedor-movimientos">
-        <Movimientos
+        <Movimiento
           movimientos={movimientosJugador}
           titulo="Jugador"
           letras={letras}
           numeros={numeros}
         />
-        <Movimientos
+        <Movimiento
           movimientos={movimientosMaquina}
           titulo="Máquina"
           letras={letras}

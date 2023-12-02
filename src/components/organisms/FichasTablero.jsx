@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FichasTablero.css';
+import './FichasTablero.css';
 import IconoGiro from '../atoms/rotate.png';
 
 const FichasTablero = ({
@@ -44,7 +44,7 @@ const FichasTablero = ({
             <button className="button-reset" onClick={resetTablero}>RESET</button>
           </div>
           <div> {barcosColocados && (
-            <button className="start-button" onClick={bloquearBarcos} styles={styles}>START</button>
+            <button className="start-button" onClick={bloquearBarcos}>START</button>
           )}</div>
         </div>
       )}
