@@ -1,0 +1,163 @@
+.body-tablero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../atoms/fondotablero.jpg');
+  background-size: cover;
+  background-position: center;
+  padding-left: 10px;
+  margin-left: -10px;
+}
+
+
+.celda.barco {
+  background-color: #3498db;
+}
+
+.celda.disparo {
+  background-color: #e74c3c;
+}
+
+.contenedor-tablero {
+  display: flex;
+  justify-content: center;
+}
+
+.fila {
+  display: flex;
+}
+
+.celda {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.celda-valida {
+  background-color: #aaffaa;
+}
+
+.celda-invalida {
+  background-color: red;
+}
+
+.contenedor-general {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.contenedor-tablero {
+  flex-direction: column;
+  align-items: center;
+}
+
+.tablero-con-iconos {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  gap: 20px;
+  width: 700px;
+  height: 500px;
+  margin: 0 auto; 
+}
+
+
+.contenedor-tablero {
+  position: relative;
+  
+}
+
+.numeros-jugador {
+  position: absolute;
+  margin-top: 80px;
+  margin-left: 86px;
+}
+
+.numeros-maquina {
+  position: absolute;
+  left: 507px;
+  top: 10px;
+}
+
+.atacada {
+  background-color: gray;
+}
+
+.titulo-tablero {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px; 
+  color: #f0f0f0;
+}
+
+.titulo-tablero-enemigo {
+  text-align: center;
+  font-size: 18px;
+  margin-left: 50px;
+  font-weight: bold;
+  color: #f0f0f0;
+  margin-bottom: 10px; 
+}
+
+.jugadas-tablero{
+  margin-bottom: 30px;
+}
+
+
+@media screen and (max-width: 767px) {
+  .body-tablero {
+    padding-left: 5px;
+    margin-left: 0; 
+  }
+
+  .tablero-con-iconos {
+    width: 90%; 
+    height: 350px; 
+    margin-top: 20px; 
+  }
+
+  .numeros-jugador {
+    top: -50px;
+    left: 15px; 
+  }
+
+  .numeros-maquina {
+    top: -50px; 
+    left: 300px; 
+  }
+
+  .titulo-tablero-enemigo {
+    margin-left: 0; 
+  }
+
+  .jugadas-tablero {
+    margin-bottom: 20px; 
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .body-tablero {
+    padding-left: 10px;
+    margin-left: -10px;
+  }
+
+  .tablero-con-iconos {
+    width: 700px;
+    height: 500px;
+    margin: 0 auto;
+  }
+
+  .numeros-jugador {
+    top: -70px;
+    left: 28px;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Jugadas.css';
-import Movimiento from '../molecules/Movimiento';
+import Movimiento from './Movimiento';
 
 const Jugadas = ({ movimientosJugador, movimientosMaquina, letras, numeros }) => {
     return (

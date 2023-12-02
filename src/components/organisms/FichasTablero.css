@@ -1,30 +1,39 @@
-.ficha {
-  position: relative;
-  margin: 10px;
-  text-align: center;
+.iconos {
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+  margin-top: 150px
 }
 
-.nombre-ficha {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 4px;
-  padding-right: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  z-index: 1;
+
+.contenedor-iconos {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ficha {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px; 
+  color: white;
 }
 
 .icono-giro img {
-  width: 24px; 
-  height: 24px; 
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px;
 }
 
 .icono-giro {
-  margin-left: 100px;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  margin-top: 10px;
 }
 
 .icono-giro:hover {
@@ -32,10 +41,9 @@
 }
 
 .icono-giro.clicked {
-  opacity: 0.3; 
+  opacity: 0.3;
   transition: opacity 0.2s ease;
 }
-
 
 button {
   width: 60px;

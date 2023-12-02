@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MainScreen.css';
 import { useNavigate } from 'react-router-dom';
-import Tablero from '../organisms/Tablero';
+import Tablero from './Tablero';
 
 const MainScreen = () => {
   const navigate = useNavigate();

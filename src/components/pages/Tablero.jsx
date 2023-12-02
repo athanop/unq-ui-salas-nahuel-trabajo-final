@@ -5,10 +5,10 @@ import IconCrucero from '../atoms/crucero.png';
 import IconLancha from '../atoms/lancha.png';
 import IconSubmarino from '../atoms/submarino.png';
 import IconExplode from '../atoms/explode.png'
-import FichasTablero from './FichasTablero';
+import FichasTablero from '../organisms/FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
-import Jugadas from './Jugadas';
+import JugadasDropdown from '../organisms/JugadasDropdown';
 import RandomShip from '../molecules/RandomShip';
 
 
@@ -146,6 +146,8 @@ const Tablero = () => {
     setTableroJugador(Array.from({ length: 10 }, () => Array(10).fill(null)));
     setBarcosBloqueados(false);
     setTableroMaquina(RandomShip());
+    setMovimientosJugador([]);
+    setMovimientosMaquina([]);
   };
 
 
@@ -206,16 +208,7 @@ const Tablero = () => {
   return (
     <div className='body-tablero'>
       <div className="contenedor-general">
-        <Jugadas
-          movimientosJugador={movimientosJugador}
-          movimientosMaquina={movimientosMaquina}
-          letras={letras}
-          numeros={numeros}
-        />
         <div className="contenedor-tablero">
-          <div className="numeros-jugador">
-            <Numeros numeros={numeros} esJugador={esJugador} />
-          </div>
           <div className="tablero-con-iconos">
             <FichasTablero
               fichas={[
@@ -235,6 +228,10 @@ const Tablero = () => {
             />
             <Letras letras={letras} />
             <div className={`tablero-jugador`}>
+            <div className="numeros-jugador">
+              <div className="titulo-tablero">Mi tablero</div>
+              <Numeros numeros={numeros} esJugador={esJugador} />
+            </div>
               {tableroJugador.map((fila, filaIndex) => (
                 <div key={filaIndex} className="fila">
                   {fila.map((celda, celdaIndex) => (
@@ -261,18 +258,17 @@ const Tablero = () => {
                 </div>
               ))}
             </div>
-
             <Letras letras={letras} />
+            <div className={`tablero-maquina`}>
             <div className="numeros-maquina">
+              <div className="titulo-tablero-enemigo">Tablero enemigo</div>
               <Numeros numeros={numeros} esJugador={esJugador} />
             </div>
-            <div className={`tablero-maquina`}>
               {tableroMaquina.map((fila, filaIndex) => (
                 <div key={filaIndex} className="fila">
                   {fila.map((celda, celdaIndex) => {
                     const isEnemyShip = esJugador && celda && celda.icono;
                     const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
-
                     return (
                       <div
                         key={celdaIndex}
@@ -292,7 +288,6 @@ const Tablero = () => {
                             style={{ width: '30px', height: '30px' }}
                           />
                         )}
-
                       </div>
                     );
                   })}
