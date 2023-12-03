@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './FichasTablero.css';
 import IconoGiro from '../atoms/rotate.png';
 
@@ -11,12 +11,26 @@ const FichasTablero = ({
   esJugador,
   barcosColocados,
   bloquearBarcos,
-  resetTablero
+  resetTablero,
+  turno,
+  mostrarMensaje,
+  setMostrarMensaje,
+  botonStartMostrado,
+  setBotonStartMostrado
 }) => {
   const estiloIconos = {
     display: orientacionIconos === 'horizontal' ? 'flex' : 'block',
     flexDirection: orientacionIconos === 'horizontal' ? 'row' : 'column',
   };
+
+  useEffect(() => {
+    if (mostrarMensaje && !botonStartMostrado) {
+      const timeout = setTimeout(() => {
+        setMostrarMensaje(false);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [mostrarMensaje, botonStartMostrado]);
 
   return (
     <div className="iconos" style={estiloIconos}>
@@ -40,17 +54,38 @@ const FichasTablero = ({
               />
               <span>{fichasDisponibles[ficha.icono]}</span>
             </div>
-          ))}<div>
+          ))}
+          <div>
             <button className="button-reset" onClick={resetTablero}>RESET</button>
           </div>
-          <div> {barcosColocados && (
-            <button className="start-button" onClick={bloquearBarcos}>START</button>
-          )}</div>
-        </div>
+          <div>
+            {barcosColocados && botonStartMostrado && (
+              <button className="start-button" onClick={() => {
+                bloquearBarcos();
+                setMostrarMensaje(true);
+                setBotonStartMostrado(false);
+              }}>START</button>
+            )}
+          </div>
+          {mostrarMensaje && !botonStartMostrado && (
+            <div className="mensaje">
+              <p>¡Comienza la partida!</p>
+            </div>
+          )}
+          {turno && !mostrarMensaje && !botonStartMostrado && (
+      <div className="mensaje">
+        <p>¡Es tu turno!</p>
+      </div>
+    )}
+    {!turno && !mostrarMensaje && !botonStartMostrado && (
+      <div className="mensaje">
+        <p>Es turno del oponente.</p>
+      </div>
+    )}
+  </div>
       )}
     </div>
   );
 };
-
 
 export default FichasTablero;

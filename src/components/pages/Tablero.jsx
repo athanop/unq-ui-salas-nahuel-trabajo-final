@@ -13,6 +13,8 @@ import RandomShip from '../molecules/RandomShip';
 
 
 const Tablero = () => {
+  const [botonStartMostrado, setBotonStartMostrado] = useState(true);
+  const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [turnoJugador, setTurnoJugador] = useState(true);
   const [esJugador, setEsJugador] = useState([]);
   const [celdasValidas, setCeldasValidas] = useState([]);
@@ -148,11 +150,16 @@ const Tablero = () => {
     setTableroMaquina(RandomShip());
     setMovimientosJugador([]);
     setMovimientosMaquina([]);
+    setMostrarMensaje([]);
+    setMostrarMensaje(false);
+    setBotonStartMostrado(true);
+   
   };
 
 
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
-    if (barcosBloqueados && turnoJugador) {
+    const celda = tablero[filaIndex][celdaIndex];
+    if (barcosBloqueados && turnoJugador && !celda?.atacada) {
       if (!tablero[filaIndex][celdaIndex]?.icono && tablero === tableroMaquina) {
         const nuevoTableroMaquina = [...tablero];
         nuevoTableroMaquina[filaIndex][celdaIndex] = { ...nuevoTableroMaquina[filaIndex][celdaIndex], atacada: true };
@@ -207,7 +214,6 @@ const Tablero = () => {
 
   return (
     <div className='body-tablero'>
-      <div className="contenedor-general">
         <div className="contenedor-tablero">
           <div className="tablero-con-iconos">
             <FichasTablero
@@ -225,6 +231,11 @@ const Tablero = () => {
               barcosColocados={barcosColocados}
               bloquearBarcos={bloquearBarcos}
               resetTablero={handleResetTablero}
+              turno={turnoJugador}
+              mostrarMensaje={mostrarMensaje}
+              setMostrarMensaje={setMostrarMensaje}
+              botonStartMostrado={botonStartMostrado}
+              setBotonStartMostrado={setBotonStartMostrado}
             />
             <Letras letras={letras} />
             <div className={`tablero-jugador`}>
@@ -295,8 +306,15 @@ const Tablero = () => {
               ))}
             </div>
           </div>
-        </div>
       </div>
+      <div>
+      <JugadasDropdown
+          movimientosJugador={movimientosJugador}
+          movimientosMaquina={movimientosMaquina}
+          letras={letras}
+          numeros={numeros}
+        />
+        </div>
     </div>
   );
 };

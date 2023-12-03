@@ -14,3 +14,15 @@
     background-color: #777; 
   }
   
+
+  .jugadas-content {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    transition: visibility 0s, height 0.3s; 
+  }
+  
+  .jugadas-content.visible {
+    visibility: visible;
+    height: auto;
+  }
