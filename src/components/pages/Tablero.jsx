@@ -15,6 +15,7 @@ import RandomShip from '../molecules/RandomShip';
 const Tablero = () => {
   const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
   const [ganador, setGanador] = useState(null);
+  const [juegoTerminado, setJuegoTerminado] = useState(false);
   const [botonStartMostrado, setBotonStartMostrado] = useState(true);
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [turnoJugador, setTurnoJugador] = useState(true);
@@ -54,7 +55,7 @@ const Tablero = () => {
     for (let fila = 0; fila < tablero.length; fila++) {
       for (let columna = 0; columna < tablero[fila].length; columna++) {
         const celda = tablero[fila][columna];
-        if (celda?.explosion) {
+        if (celda?.explosion || celda?.icono === IconExplode) {
           barcosDestruidos++;
         }
       }
@@ -63,17 +64,23 @@ const Tablero = () => {
   };
   
   useEffect(() => {
-    const todosBarcosJugadorDestruidos = verificarBarcosDestruidos(tableroJugador);
-    const todosBarcosMaquinaDestruidos = verificarBarcosDestruidos(tableroMaquina);
+    if (juegoTerminado) return; 
+    
+    const barcosDestruidosJugador = verificarBarcosDestruidos(tableroJugador);
+    const barcosDestruidosMaquina = verificarBarcosDestruidos(tableroMaquina);
   
-    if (todosBarcosJugadorDestruidos) {
+    console.log("Barcos destruidos en el tablero del jugador:", barcosDestruidosJugador);
+    console.log("Barcos destruidos en el tablero de la máquina:", barcosDestruidosMaquina);
+  
+    if (barcosDestruidosJugador) {
       setGanador('¡Tu oponente ganó la partida!');
-
-    } else if (todosBarcosMaquinaDestruidos) {
+      setJuegoTerminado(true); 
+    } else if (barcosDestruidosMaquina) {
       setGanador('¡Ganaste la partida!');
+      setJuegoTerminado(true);
     }
-  }, [tableroJugador, tableroMaquina]); 
-  
+  }, [tableroJugador, tableroMaquina, juegoTerminado]);
+
   
 
   const cambiarOrientacion = (orientacion) => {
@@ -183,6 +190,7 @@ const Tablero = () => {
     setMostrarMensaje(false);
     setBotonStartMostrado(true);
     setGanador([])
+    setJuegoTerminado(false)
   };
 
   
@@ -244,7 +252,7 @@ const Tablero = () => {
   
     return { filaIndex: filaAleatoria, celdaIndex: celdaAleatoria };
   };
-
+  
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
@@ -294,7 +302,11 @@ const Tablero = () => {
                           : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
                       onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
                       onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                      onClick={() => handleCellClick(filaIndex, celdaIndex, tableroJugador)}
+                      onClick={() => {
+                        if (!juegoTerminado) {
+                          handleCellClick(filaIndex, celdaIndex, tableroJugador);
+                        }
+                      }}
                     >
                       {celda && celda.icono && (
                         <img
@@ -326,7 +338,7 @@ const Tablero = () => {
                         onDragOver={(event) => { }}
                         onDrop={(event) => { }}
                         onClick={() => {
-                          if (turnoJugador) {
+                          if (!juegoTerminado && turnoJugador) {
                             handleCellClick(filaIndex, celdaIndex, tableroMaquina);
                           }
                         }}
