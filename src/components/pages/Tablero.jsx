@@ -13,6 +13,7 @@ import RandomShip from '../molecules/RandomShip';
 
 
 const Tablero = () => {
+  const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
   const [ganador, setGanador] = useState(null);
   const [botonStartMostrado, setBotonStartMostrado] = useState(true);
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
@@ -207,41 +208,47 @@ const Tablero = () => {
 
         if (turnoJugador && celda && celda.icono) {
           nuevoTableroMaquina[filaIndex][celdaIndex] = { ...celda, atacada: true, explosion: true };
-        } else {
-          nuevoTableroMaquina[filaIndex][celdaIndex] = { ...celda, atacada: true };
-        }
-        setTableroMaquina(nuevoTableroMaquina);
-        setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
-        setTimeout(() => {
-          generarCeldaAleatoria();
+          setTableroMaquina(nuevoTableroMaquina);
+          setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
+          setTimeout(() => {
+          const movimientoMaquina = generarCeldaAleatoria();
+          setMovimientosMaquina([...movimientosMaquina, movimientoMaquina]);
           setTurnoJugador(true);
-          setMovimientosMaquina([...movimientosMaquina, { filaIndex, celdaIndex }]);
         }, 1000);
-        setTurnoJugador(false);
+        } 
       }
     }
     
   };
 
 
+
   const generarCeldaAleatoria = () => {
-    const filaAleatoria = Math.floor(Math.random() * tableroJugador.length);
-    const celdaAleatoria = Math.floor(Math.random() * tableroJugador[filaAleatoria].length);
+    let filaAleatoria, celdaAleatoria;
+    do {
+      filaAleatoria = Math.floor(Math.random() * tableroJugador.length);
+      celdaAleatoria = Math.floor(Math.random() * tableroJugador[filaAleatoria].length);
+    } while (celdasSeleccionadas.has(`${filaAleatoria},${celdaAleatoria}`));
+  
+    const nuevoTableroJugador = [...tableroJugador];
     if (!tableroJugador[filaAleatoria][celdaAleatoria]?.icono) {
-      const nuevoTableroJugador = [...tableroJugador];
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { atacada: true };
-      setTableroJugador(nuevoTableroJugador);
     } else {
-      const nuevoTableroJugador = [...tableroJugador];
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { icono: IconExplode };
-      setTableroJugador(nuevoTableroJugador);
     }
+    setTableroJugador(nuevoTableroJugador);
+  
+    const nuevasCeldasSeleccionadas = new Set(celdasSeleccionadas);
+    nuevasCeldasSeleccionadas.add(`${filaAleatoria},${celdaAleatoria}`);
+    setCeldasSeleccionadas(nuevasCeldasSeleccionadas);
+  
     return { filaIndex: filaAleatoria, celdaIndex: celdaAleatoria };
   };
 
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
+  
 
   return (
     <div className='body-tablero'>
