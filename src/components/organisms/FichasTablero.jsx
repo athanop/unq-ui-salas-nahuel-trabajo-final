@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './FichasTablero.css';
 import IconoGiro from '../atoms/rotate.png';
 
@@ -27,10 +27,10 @@ const FichasTablero = ({
     if (mostrarMensaje && !botonStartMostrado) {
       const timeout = setTimeout(() => {
         setMostrarMensaje(false);
-      }, 3000);
+      }, 1000);
       return () => clearTimeout(timeout);
     }
-  }, [mostrarMensaje, botonStartMostrado]);
+  }, [mostrarMensaje, botonStartMostrado, setMostrarMensaje]);
 
   return (
     <div className="iconos" style={estiloIconos}>
@@ -69,20 +69,20 @@ const FichasTablero = ({
           </div>
           {mostrarMensaje && !botonStartMostrado && (
             <div className="mensaje">
-              <p>¡Comienza la partida!</p>
+              <p>¡Comienza la batalla!</p>
             </div>
           )}
           {turno && !mostrarMensaje && !botonStartMostrado && (
-      <div className="mensaje">
-        <p>¡Es tu turno!</p>
-      </div>
-    )}
-    {!turno && !mostrarMensaje && !botonStartMostrado && (
-      <div className="mensaje">
-        <p>Es turno del oponente.</p>
-      </div>
-    )}
-  </div>
+            <div className="mensaje">
+              <p>¡Derriba a tu oponente!</p>
+            </div>
+          )}
+          {!turno && !mostrarMensaje && !botonStartMostrado && (
+            <div className="mensaje">
+              <p>¡Es turno del oponente!</p>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

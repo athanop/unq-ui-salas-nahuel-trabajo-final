@@ -1,4 +1,3 @@
-/* CSS para body-tablero */
 .body-tablero {
   display: flex;
   flex-direction: column;
@@ -9,20 +8,12 @@
   background-position: center;
   padding-left: 10px;
   margin-left: -10px;
-  /* Estilos para ocupar toda la pantalla */
   width: 100vw;
   height: 100vh;
   margin: 0;
 }
 
 
-.celda.barco {
-  background-color: #3498db;
-}
-
-.celda.disparo {
-  background-color: #e74c3c;
-}
 
 .contenedor-tablero {
   display: flex;
@@ -92,8 +83,21 @@
 }
 
 .atacada {
-  background-color: gray;
+  background-color: #ADD8E6;
+  animation: onda 0.5s ease-out;
 }
+
+@keyframes onda {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
 
 .titulo-tablero {
   text-align: center;
