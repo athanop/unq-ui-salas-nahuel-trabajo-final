@@ -8,9 +8,8 @@ import IconExplode from '../atoms/explode.png'
 import FichasTablero from '../organisms/FichasTablero';
 import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
-import JugadasDropdown from '../organisms/JugadasDropdown';
 import RandomShip from '../molecules/RandomShip';
-
+import Jugadas from '../molecules/Jugadas';
 
 const Tablero = () => {
   const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
@@ -362,8 +361,8 @@ const Tablero = () => {
           </div>
         </div>
       </div>
-      <div>
-        <JugadasDropdown
+      <div className='jugadas-cont'>
+        <Jugadas
           movimientosJugador={movimientosJugador}
           movimientosMaquina={movimientosMaquina}
           letras={letras}

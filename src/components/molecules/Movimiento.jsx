@@ -11,18 +11,20 @@ const Movimiento = ({ movimientos, titulo, letras, numeros }) => {
   }, [movimientos]);
 
   return (
-    <div className="movimientos-container" ref={movimientosContainerRef}>
-      <h3>{titulo}</h3>
-      <ul>
-        {movimientos.map((movimiento, index) => (
-          <li key={index}>
-            <span className="movimiento">
-              {letras[movimiento.filaIndex]}
-              {numeros[movimiento.celdaIndex]}
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <h3 className="titulo">{titulo}</h3>
+      <div className="movimientos-container" ref={movimientosContainerRef}>
+        <ul>
+          {movimientos.map((movimiento, index) => (
+            <li key={index}>
+              <span className="movimiento">
+                {letras[movimiento.filaIndex]}
+                {numeros[movimiento.celdaIndex]}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

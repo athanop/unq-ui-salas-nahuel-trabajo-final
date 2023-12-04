@@ -2,4 +2,6 @@
   display: flex;
   margin-left: 10px;
   color: white;
+  gap: 10px;
 }
+
