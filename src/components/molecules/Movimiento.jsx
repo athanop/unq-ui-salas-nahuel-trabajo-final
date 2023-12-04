@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import './Movimiento.css';
 
 const Movimiento = ({ movimientos, titulo, letras, numeros }) => {

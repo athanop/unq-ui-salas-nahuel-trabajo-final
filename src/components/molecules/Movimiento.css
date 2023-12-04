@@ -4,13 +4,13 @@
   padding: 10px;
   margin-right: 20px;
   border: 1px solid #ccc;
-  width: 120px; 
+  width: 120px;
 }
 
 .movimientos-container h3 {
   font-size: 12px;
   margin: 0;
-  padding: 5px 0; 
+  padding: 5px 0;
 }
 
 .movimientos-container ul {
@@ -27,5 +27,5 @@
 .movimientos-container ul li .movimiento {
   font-weight: bold;
   font-style: italic;
-  color: #ff6347; 
+  color: #ff6347;
 }

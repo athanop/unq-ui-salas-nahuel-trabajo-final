@@ -14,17 +14,17 @@ const MainScreen = () => {
 
   return (
     <div className='body-main'>
-    <div className="main-screen-container">
-      <h1 className="game-title">Battleship</h1>
-      <div className="custom-menu"> 
-        <button className="jugar-button" onClick={goToTablero}>Jugar</button>
-      </div>
-      <div className="tableros-container">
-        <div className="tablero-container" key="jugador">
-          {jugarClicked && <Tablero />}
+      <div className="main-screen-container">
+        <h1 className="game-title">Battleship</h1>
+        <div className="custom-menu">
+          <button className="jugar-button" onClick={goToTablero}>Jugar</button>
+        </div>
+        <div className="tableros-container">
+          <div className="tablero-container" key="jugador">
+            {jugarClicked && <Tablero />}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

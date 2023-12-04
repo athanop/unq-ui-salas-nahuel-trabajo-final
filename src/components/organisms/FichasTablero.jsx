@@ -81,14 +81,14 @@ const FichasTablero = ({
             </div>
           )}
           {ganador && ganador.length > 0 && (
-          <div className="mensaje-ganador">
-            <p>{ganador}</p>
-          </div>
-        )}
+            <div className="mensaje-ganador">
+              <p>{ganador}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
-    
+
   );
 };
 

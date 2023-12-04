@@ -56,18 +56,18 @@
 
 .tablero-con-iconos {
   display: flex;
-  align-items: center; 
+  align-items: center;
   justify-content: center;
   gap: 20px;
   width: 700px;
   height: 500px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 
 .contenedor-tablero {
   position: relative;
-  
+
 }
 
 .numeros-jugador {
@@ -92,6 +92,7 @@
     transform: scale(1);
     opacity: 1;
   }
+
   100% {
     transform: scale(1.5);
     opacity: 0;
@@ -103,7 +104,7 @@
   text-align: center;
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   color: #f0f0f0;
 }
 
@@ -112,34 +113,34 @@
   font-size: 18px;
   font-weight: bold;
   color: #f0f0f0;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 
 @media screen and (max-width: 767px) {
   .body-tablero {
     padding-left: 5px;
-    margin-left: 0; 
+    margin-left: 0;
   }
 
   .tablero-con-iconos {
-    width: 90%; 
-    height: 350px; 
-    margin-top: 20px; 
+    width: 90%;
+    height: 350px;
+    margin-top: 20px;
   }
 
   .numeros-jugador {
     top: -50px;
-    left: 15px; 
+    left: 15px;
   }
 
   .numeros-maquina {
-    top: -50px; 
-    left: 300px; 
+    top: -50px;
+    left: 300px;
   }
 
   .titulo-tablero-enemigo {
-    margin-left: 0; 
+    margin-left: 0;
   }
 
 

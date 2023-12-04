@@ -1,6 +1,5 @@
 .contenedor-movimientos {
-    display: flex;
-    margin-left: 10px;
-    color: white;
-  }
-  
+  display: flex;
+  margin-left: 10px;
+  color: white;
+}

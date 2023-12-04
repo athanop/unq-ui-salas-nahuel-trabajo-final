@@ -62,26 +62,26 @@ const Tablero = () => {
     }
     return barcosDestruidos === 14;
   };
-  
+
   useEffect(() => {
-    if (juegoTerminado) return; 
-    
+    if (juegoTerminado) return;
+
     const barcosDestruidosJugador = verificarBarcosDestruidos(tableroJugador);
     const barcosDestruidosMaquina = verificarBarcosDestruidos(tableroMaquina);
-  
+
     console.log("Barcos destruidos en el tablero del jugador:", barcosDestruidosJugador);
     console.log("Barcos destruidos en el tablero de la máquina:", barcosDestruidosMaquina);
-  
+
     if (barcosDestruidosJugador) {
       setGanador('¡Tu oponente ganó la partida!');
-      setJuegoTerminado(true); 
+      setJuegoTerminado(true);
     } else if (barcosDestruidosMaquina) {
       setGanador('¡Ganaste la partida!');
       setJuegoTerminado(true);
     }
   }, [tableroJugador, tableroMaquina, juegoTerminado]);
 
-  
+
 
   const cambiarOrientacion = (orientacion) => {
     setOrientacionIconos(orientacion);
@@ -193,8 +193,8 @@ const Tablero = () => {
     setJuegoTerminado(false)
   };
 
-  
-  
+
+
 
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     const celda = tablero[filaIndex][celdaIndex];
@@ -219,14 +219,14 @@ const Tablero = () => {
           setTableroMaquina(nuevoTableroMaquina);
           setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
           setTimeout(() => {
-          const movimientoMaquina = generarCeldaAleatoria();
-          setMovimientosMaquina([...movimientosMaquina, movimientoMaquina]);
-          setTurnoJugador(true);
-        }, 1000);
-        } 
+            const movimientoMaquina = generarCeldaAleatoria();
+            setMovimientosMaquina([...movimientosMaquina, movimientoMaquina]);
+            setTurnoJugador(true);
+          }, 1000);
+        }
       }
     }
-    
+
   };
 
 
@@ -237,7 +237,7 @@ const Tablero = () => {
       filaAleatoria = Math.floor(Math.random() * tableroJugador.length);
       celdaAleatoria = Math.floor(Math.random() * tableroJugador[filaAleatoria].length);
     } while (celdasSeleccionadas.has(`${filaAleatoria},${celdaAleatoria}`));
-  
+
     const nuevoTableroJugador = [...tableroJugador];
     if (!tableroJugador[filaAleatoria][celdaAleatoria]?.icono) {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { atacada: true };
@@ -245,127 +245,127 @@ const Tablero = () => {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { icono: IconExplode };
     }
     setTableroJugador(nuevoTableroJugador);
-  
+
     const nuevasCeldasSeleccionadas = new Set(celdasSeleccionadas);
     nuevasCeldasSeleccionadas.add(`${filaAleatoria},${celdaAleatoria}`);
     setCeldasSeleccionadas(nuevasCeldasSeleccionadas);
-  
+
     return { filaIndex: filaAleatoria, celdaIndex: celdaAleatoria };
   };
-  
+
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
-  
+
 
   return (
     <div className='body-tablero'>
-        <div className="contenedor-tablero">
-          <div className="tablero-con-iconos">
-            <FichasTablero
-              fichas={[
-                { nombre: 'Portaaviones', icono: IconPortaAviones, agujeros: 5 },
-                { nombre: 'Crucero', icono: IconCrucero, agujeros: 4 },
-                { nombre: 'Lancha', icono: IconLancha, agujeros: 2 },
-                { nombre: 'Submarino', icono: IconSubmarino, agujeros: 3 },
-              ]}
-              orientacionIconos={orientacionIconos}
-              cambiarOrientacion={cambiarOrientacion}
-              handleDragStart={handleDragStart}
-              fichasDisponibles={fichasDisponibles}
-              esJugador={esJugador}
-              barcosColocados={barcosColocados}
-              bloquearBarcos={bloquearBarcos}
-              resetTablero={handleResetTablero}
-              turno={turnoJugador}
-              mostrarMensaje={mostrarMensaje}
-              setMostrarMensaje={setMostrarMensaje}
-              botonStartMostrado={botonStartMostrado}
-              setBotonStartMostrado={setBotonStartMostrado}
-              ganador={ganador}
-            />
-            <Letras letras={letras} />
-            <div className={`tablero-jugador`}>
+      <div className="contenedor-tablero">
+        <div className="tablero-con-iconos">
+          <FichasTablero
+            fichas={[
+              { nombre: 'Portaaviones', icono: IconPortaAviones, agujeros: 5 },
+              { nombre: 'Crucero', icono: IconCrucero, agujeros: 4 },
+              { nombre: 'Lancha', icono: IconLancha, agujeros: 2 },
+              { nombre: 'Submarino', icono: IconSubmarino, agujeros: 3 },
+            ]}
+            orientacionIconos={orientacionIconos}
+            cambiarOrientacion={cambiarOrientacion}
+            handleDragStart={handleDragStart}
+            fichasDisponibles={fichasDisponibles}
+            esJugador={esJugador}
+            barcosColocados={barcosColocados}
+            bloquearBarcos={bloquearBarcos}
+            resetTablero={handleResetTablero}
+            turno={turnoJugador}
+            mostrarMensaje={mostrarMensaje}
+            setMostrarMensaje={setMostrarMensaje}
+            botonStartMostrado={botonStartMostrado}
+            setBotonStartMostrado={setBotonStartMostrado}
+            ganador={ganador}
+          />
+          <Letras letras={letras} />
+          <div className={`tablero-jugador`}>
             <div className="numeros-jugador">
               <div className="titulo-tablero">Mi tablero</div>
               <Numeros numeros={numeros} esJugador={esJugador} />
             </div>
-              {tableroJugador.map((fila, filaIndex) => (
-                <div key={filaIndex} className="fila">
-                  {fila.map((celda, celdaIndex) => (
-                    <div
-                      key={celdaIndex}
-                      className={`celda ${celdasValidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                        ? 'celda-valida'
-                        : ''} ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                          ? 'celda-invalida'
-                          : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                      onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
-                      onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                      onClick={() => {
-                        if (!juegoTerminado) {
-                          handleCellClick(filaIndex, celdaIndex, tableroJugador);
-                        }
-                      }}
-                    >
-                      {celda && celda.icono && (
-                        <img
-                          src={celda.icono}
-                          alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                          style={{ width: '30px', height: '30px' }}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <Letras letras={letras} />
-            <div className={`tablero-maquina`}>
+            {tableroJugador.map((fila, filaIndex) => (
+              <div key={filaIndex} className="fila">
+                {fila.map((celda, celdaIndex) => (
+                  <div
+                    key={celdaIndex}
+                    className={`celda ${celdasValidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                      ? 'celda-valida'
+                      : ''} ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                        ? 'celda-invalida'
+                        : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
+                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
+                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
+                    onClick={() => {
+                      if (!juegoTerminado) {
+                        handleCellClick(filaIndex, celdaIndex, tableroJugador);
+                      }
+                    }}
+                  >
+                    {celda && celda.icono && (
+                      <img
+                        src={celda.icono}
+                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                        style={{ width: '30px', height: '30px' }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <Letras letras={letras} />
+          <div className={`tablero-maquina`}>
             <div className="numeros-maquina">
               <div className="titulo-tablero-enemigo">Tablero enemigo</div>
               <Numeros numeros={numeros} esJugador={esJugador} />
             </div>
-              {tableroMaquina.map((fila, filaIndex) => (
-                <div key={filaIndex} className="fila">
-                  {fila.map((celda, celdaIndex) => {
-                    const isEnemyShip = esJugador && celda && celda.icono;
-                    const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
-                    return (
-                      <div
-                        key={celdaIndex}
-                        className={`celda ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                        onDragOver={(event) => { }}
-                        onDrop={(event) => { }}
-                        onClick={() => {
-                          if (!juegoTerminado && turnoJugador) {
-                            handleCellClick(filaIndex, celdaIndex, tableroMaquina);
-                          }
-                        }}
-                      >
-                        {showIcon && (
-                          <img
-                            src={showIcon === IconExplode ? IconExplode : showIcon}
-                            alt={showIcon === IconExplode ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                            style={{ width: '30px', height: '30px' }}
-                          />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
+            {tableroMaquina.map((fila, filaIndex) => (
+              <div key={filaIndex} className="fila">
+                {fila.map((celda, celdaIndex) => {
+                  const isEnemyShip = esJugador && celda && celda.icono;
+                  const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
+                  return (
+                    <div
+                      key={celdaIndex}
+                      className={`celda ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
+                      onDragOver={(event) => { }}
+                      onDrop={(event) => { }}
+                      onClick={() => {
+                        if (!juegoTerminado && turnoJugador) {
+                          handleCellClick(filaIndex, celdaIndex, tableroMaquina);
+                        }
+                      }}
+                    >
+                      {showIcon && (
+                        <img
+                          src={showIcon === IconExplode ? IconExplode : showIcon}
+                          alt={showIcon === IconExplode ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                          style={{ width: '30px', height: '30px' }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
+        </div>
       </div>
       <div>
-      <JugadasDropdown
+        <JugadasDropdown
           movimientosJugador={movimientosJugador}
           movimientosMaquina={movimientosMaquina}
           letras={letras}
           numeros={numeros}
         />
-        </div>
+      </div>
     </div>
   );
 };

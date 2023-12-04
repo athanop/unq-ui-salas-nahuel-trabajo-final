@@ -1,19 +1,19 @@
 .letras-container {
-    display: flex;
-    flex-direction: column; 
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2px;
-  }
-  
-  .letra {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    font-weight: bold;
-    font-size: 14px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.letra {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  font-size: 14px;
+}
