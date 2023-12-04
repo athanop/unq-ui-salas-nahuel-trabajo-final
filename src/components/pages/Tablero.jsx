@@ -13,6 +13,7 @@ import RandomShip from '../molecules/RandomShip';
 
 
 const Tablero = () => {
+  const [ganador, setGanador] = useState(null);
   const [botonStartMostrado, setBotonStartMostrado] = useState(true);
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
   const [turnoJugador, setTurnoJugador] = useState(true);
@@ -46,6 +47,33 @@ const Tablero = () => {
       console.log('Aún faltan barcos por colocar');
     }
   };
+
+  const verificarBarcosDestruidos = (tablero) => {
+    let barcosDestruidos = 0;
+    for (let fila = 0; fila < tablero.length; fila++) {
+      for (let columna = 0; columna < tablero[fila].length; columna++) {
+        const celda = tablero[fila][columna];
+        if (celda?.explosion) {
+          barcosDestruidos++;
+        }
+      }
+    }
+    return barcosDestruidos === 14;
+  };
+  
+  useEffect(() => {
+    const todosBarcosJugadorDestruidos = verificarBarcosDestruidos(tableroJugador);
+    const todosBarcosMaquinaDestruidos = verificarBarcosDestruidos(tableroMaquina);
+  
+    if (todosBarcosJugadorDestruidos) {
+      setGanador('¡Tu oponente ganó la partida!');
+
+    } else if (todosBarcosMaquinaDestruidos) {
+      setGanador('¡Ganaste la partida!');
+    }
+  }, [tableroJugador, tableroMaquina]); 
+  
+  
 
   const cambiarOrientacion = (orientacion) => {
     setOrientacionIconos(orientacion);
@@ -153,9 +181,11 @@ const Tablero = () => {
     setMostrarMensaje([]);
     setMostrarMensaje(false);
     setBotonStartMostrado(true);
-   
+    setGanador([])
   };
 
+  
+  
 
   const handleCellClick = (filaIndex, celdaIndex, tablero) => {
     const celda = tablero[filaIndex][celdaIndex];
@@ -190,6 +220,7 @@ const Tablero = () => {
         setTurnoJugador(false);
       }
     }
+    
   };
 
 
@@ -236,6 +267,7 @@ const Tablero = () => {
               setMostrarMensaje={setMostrarMensaje}
               botonStartMostrado={botonStartMostrado}
               setBotonStartMostrado={setBotonStartMostrado}
+              ganador={ganador}
             />
             <Letras letras={letras} />
             <div className={`tablero-jugador`}>

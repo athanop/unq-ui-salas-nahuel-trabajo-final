@@ -16,12 +16,15 @@ const FichasTablero = ({
   mostrarMensaje,
   setMostrarMensaje,
   botonStartMostrado,
-  setBotonStartMostrado
+  setBotonStartMostrado,
+  ganador
 }) => {
   const estiloIconos = {
     display: orientacionIconos === 'horizontal' ? 'flex' : 'block',
     flexDirection: orientacionIconos === 'horizontal' ? 'row' : 'column',
   };
+
+  const mostrarMensajeTurno = !ganador && !mostrarMensaje && !botonStartMostrado;
 
   useEffect(() => {
     if (mostrarMensaje && !botonStartMostrado) {
@@ -72,19 +75,20 @@ const FichasTablero = ({
               <p>¡Comienza la batalla!</p>
             </div>
           )}
-          {turno && !mostrarMensaje && !botonStartMostrado && (
+          {mostrarMensajeTurno && (
             <div className="mensaje">
-              <p>¡Derriba a tu oponente!</p>
+              {turno ? <p>¡Derriba a tu oponente!</p> : <p>¡Es turno del oponente!</p>}
             </div>
           )}
-          {!turno && !mostrarMensaje && !botonStartMostrado && (
-            <div className="mensaje">
-              <p>¡Es turno del oponente!</p>
-            </div>
-          )}
+          {ganador && ganador.length > 0 && (
+          <div className="mensaje-ganador">
+            <p>{ganador}</p>
+          </div>
+        )}
         </div>
       )}
     </div>
+    
   );
 };
 

@@ -83,3 +83,13 @@ button:disabled {
 .start-button:hover {
   background-color: #1c5378; 
 }
+
+.mensaje-ganador {
+  top: 0;
+  left: 0;
+  background-color: rgba(225, 225, 225, 0.3); /* Fondo verde con transparencia */
+  border: 1px solid #030303; /* Borde más oscuro */
+  color: #FFFFFF; /* Texto blanco para contraste */
+  padding: 10px;
+  margin-top: 10px;
+}
