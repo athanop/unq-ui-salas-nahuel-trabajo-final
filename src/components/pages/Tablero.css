@@ -10,15 +10,14 @@
   margin-left: -10px;
   width: 100vw;
   height: 100vh;
-  margin: 0;
+  
 }
-
-
-
-.contenedor-tablero {
+.contenedor-principal {
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
 }
+
+
 
 .fila {
   display: flex;
@@ -42,16 +41,12 @@
   background-color: red;
 }
 
-.contenedor-general {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+
 
 .contenedor-tablero {
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .tablero-con-iconos {
@@ -65,23 +60,6 @@
 }
 
 
-.contenedor-tablero {
-  position: relative;
-
-}
-
-.numeros-jugador {
-  position: absolute;
-  margin-top: 80px;
-  margin-left: 86px;
-}
-
-.numeros-maquina {
-  position: absolute;
-  left: 507px;
-  top: 10px;
-}
-
 .atacada {
   background-color: #ADD8E6;
   animation: onda 0.5s ease-out;
@@ -92,20 +70,18 @@
     transform: scale(1);
     opacity: 1;
   }
-
   100% {
     transform: scale(1.5);
     opacity: 0;
   }
 }
 
-
 .titulo-tablero {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
   color: #f0f0f0;
+  margin-bottom: 10px;
 }
 
 .titulo-tablero-enemigo {
@@ -116,51 +92,41 @@
   margin-bottom: 10px;
 }
 
-
 @media screen and (max-width: 767px) {
   .body-tablero {
     padding-left: 5px;
     margin-left: 0;
+    height: auto;
   }
 
   .tablero-con-iconos {
     width: 90%;
-    height: 350px;
+    height: auto; 
     margin-top: 20px;
+    flex-direction: column;
   }
 
-  .numeros-jugador {
-    top: -50px;
-    left: 15px;
-  }
-
-  .numeros-maquina {
-    top: -50px;
-    left: 300px;
-  }
-
+  
   .titulo-tablero-enemigo {
     margin-left: 0;
   }
 
-
-}
-
-
-@media screen and (min-width: 768px) {
-  .body-tablero {
-    padding-left: 10px;
-    margin-left: -10px;
-  }
-
-  .tablero-con-iconos {
-    width: 700px;
-    height: 500px;
-    margin: 0 auto;
-  }
-
   .numeros-jugador {
-    top: -70px;
-    left: 28px;
+    flex-direction: column; 
+    align-items: flex-start; 
   }
+  .numeros-maquina {
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+
+  .contenedor-principal {
+    flex-direction: row;
+  }
+  .letras-container {
+    align-self: flex-end;
+  }
+
 }
+
+

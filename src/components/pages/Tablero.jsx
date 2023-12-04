@@ -284,77 +284,81 @@ const Tablero = () => {
             setBotonStartMostrado={setBotonStartMostrado}
             ganador={ganador}
           />
-          <Letras letras={letras} />
-          <div className={`tablero-jugador`}>
-            <div className="numeros-jugador">
-              <div className="titulo-tablero">Mi tablero</div>
-              <Numeros numeros={numeros} esJugador={esJugador} />
-            </div>
-            {tableroJugador.map((fila, filaIndex) => (
-              <div key={filaIndex} className="fila">
-                {fila.map((celda, celdaIndex) => (
-                  <div
-                    key={celdaIndex}
-                    className={`celda ${celdasValidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                      ? 'celda-valida'
-                      : ''} ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                        ? 'celda-invalida'
-                        : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                    onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
-                    onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                    onClick={() => {
-                      if (!juegoTerminado) {
-                        handleCellClick(filaIndex, celdaIndex, tableroJugador);
-                      }
-                    }}
-                  >
-                    {celda && celda.icono && (
-                      <img
-                        src={celda.icono}
-                        alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                        style={{ width: '30px', height: '30px' }}
-                      />
-                    )}
-                  </div>
-                ))}
+          <div className="contenedor-principal">
+            <Letras letras={letras} />
+            <div className={`tablero-jugador`}>
+              <div className="numeros-jugador">
+                <div className="titulo-tablero">Mi tablero</div>
+                <Numeros numeros={numeros} esJugador={esJugador} />
               </div>
-            ))}
-          </div>
-          <Letras letras={letras} />
-          <div className={`tablero-maquina`}>
-            <div className="numeros-maquina">
-              <div className="titulo-tablero-enemigo">Tablero enemigo</div>
-              <Numeros numeros={numeros} esJugador={esJugador} />
-            </div>
-            {tableroMaquina.map((fila, filaIndex) => (
-              <div key={filaIndex} className="fila">
-                {fila.map((celda, celdaIndex) => {
-                  const isEnemyShip = esJugador && celda && celda.icono;
-                  const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
-                  return (
+              {tableroJugador.map((fila, filaIndex) => (
+                <div key={filaIndex} className="fila">
+                  {fila.map((celda, celdaIndex) => (
                     <div
                       key={celdaIndex}
-                      className={`celda ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                      onDragOver={(event) => { }}
-                      onDrop={(event) => { }}
+                      className={`celda ${celdasValidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                        ? 'celda-valida'
+                        : ''} ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
+                          ? 'celda-invalida'
+                          : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
+                      onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
+                      onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
                       onClick={() => {
-                        if (!juegoTerminado && turnoJugador) {
-                          handleCellClick(filaIndex, celdaIndex, tableroMaquina);
+                        if (!juegoTerminado) {
+                          handleCellClick(filaIndex, celdaIndex, tableroJugador);
                         }
                       }}
                     >
-                      {showIcon && (
+                      {celda && celda.icono && (
                         <img
-                          src={showIcon === IconExplode ? IconExplode : showIcon}
-                          alt={showIcon === IconExplode ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                          src={celda.icono}
+                          alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
                           style={{ width: '30px', height: '30px' }}
                         />
                       )}
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="contenedor-principal">
+            <Letras letras={letras} />
+            <div className={`tablero-maquina`}>
+              <div className="numeros-maquina">
+                <div className="titulo-tablero-enemigo">Tablero enemigo</div>
+                <Numeros numeros={numeros} esJugador={esJugador} />
               </div>
-            ))}
+              {tableroMaquina.map((fila, filaIndex) => (
+                <div key={filaIndex} className="fila">
+                  {fila.map((celda, celdaIndex) => {
+                    const isEnemyShip = esJugador && celda && celda.icono;
+                    const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
+                    return (
+                      <div
+                        key={celdaIndex}
+                        className={`celda ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
+                        onDragOver={(event) => { }}
+                        onDrop={(event) => { }}
+                        onClick={() => {
+                          if (!juegoTerminado && turnoJugador) {
+                            handleCellClick(filaIndex, celdaIndex, tableroMaquina);
+                          }
+                        }}
+                      >
+                        {showIcon && (
+                          <img
+                            src={showIcon === IconExplode ? IconExplode : showIcon}
+                            alt={showIcon === IconExplode ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
+                            style={{ width: '30px', height: '30px' }}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@
 .ficha {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 8px; 
   color: white;
 }
 
@@ -67,33 +67,36 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.button-reset,
-.start-button {
+.button-reset,.start-button {
   background-color: #3498db;
-  color: #fff;
-  font-size: 12px;
-  border: none;
+  color: #fff; 
+  font-size: 12px; 
+  border: none; 
   border-radius: 5px;
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .button-reset:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; 
 }
 
 .start-button:hover {
-  background-color: #1c5378;
+  background-color: #1c5378; 
 }
 
 .mensaje-ganador {
   top: 0;
   left: 0;
-  background-color: rgba(225, 225, 225, 0.3);
-  /* Fondo verde con transparencia */
+  background-color: rgba(225, 225, 225, 0.3); 
   border: 1px solid #030303;
-  /* Borde más oscuro */
   color: #FFFFFF;
-  /* Texto blanco para contraste */
   padding: 10px;
   margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .iconos {
+    transform: none; 
+    margin-top: 50px; 
+  }
 }
