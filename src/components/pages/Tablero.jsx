@@ -254,7 +254,7 @@ const Tablero = () => {
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
-
+console.log(esJugador)
   return (
     <div className='body-tablero'>
       <div className="contenedor-tablero">
@@ -290,12 +290,14 @@ const Tablero = () => {
               </div>
               <TableroPlayer
                 tableroJugador={tableroJugador}
+                esJugador={esJugador}
                 celdasValidas={celdasValidas}
                 celdasInvalidas={celdasInvalidas}
                 juegoTerminado={juegoTerminado}
                 handleDragOver={handleDragOver}
                 handleDrop={handleDrop}
                 handleCellClick={handleCellClick}
+                IconExplode={IconExplode}
               />
             </div>
           </div>
@@ -306,35 +308,17 @@ const Tablero = () => {
                 <div className="titulo-tablero-enemigo">Tablero enemigo</div>
                 <Numeros numeros={numeros} esJugador={esJugador} />
               </div>
-              {tableroMaquina.map((fila, filaIndex) => (
-                <div key={filaIndex} className="fila">
-                  {fila.map((celda, celdaIndex) => {
-                    const isEnemyShip = esJugador && celda && celda.icono;
-                    const showIcon = isEnemyShip ? (celda?.atacada ? (celda.explosion ? IconExplode : null) : null) : celda?.icono;
-                    return (
-                      <div
-                        key={celdaIndex}
-                        className={`celda ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                        onDragOver={(event) => { }}
-                        onDrop={(event) => { }}
-                        onClick={() => {
-                          if (!juegoTerminado && turnoJugador) {
-                            handleCellClick(filaIndex, celdaIndex, tableroMaquina);
-                          }
-                        }}
-                      >
-                        {showIcon && (
-                          <img
-                            src={showIcon === IconExplode ? IconExplode : showIcon}
-                            alt={showIcon === IconExplode ? 'Explosión' : `Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                            style={{ width: '30px', height: '30px' }}
-                          />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+              <TableroPlayer
+                tableroJugador={tableroMaquina}
+                esJugador={!esJugador}
+                celdasValidas={[]}
+                celdasInvalidas={[]}
+                juegoTerminado={juegoTerminado}
+                handleDragOver={() => { }}
+                handleDrop={() => { }}
+                handleCellClick={handleCellClick}
+                IconExplode={IconExplode}
+              />
             </div>
           </div>
         </div>
