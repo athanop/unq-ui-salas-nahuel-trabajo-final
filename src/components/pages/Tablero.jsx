@@ -254,7 +254,7 @@ const Tablero = () => {
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
-console.log(esJugador)
+  console.log(esJugador)
   return (
     <div className='body-tablero'>
       <div className="contenedor-tablero">
