@@ -1,0 +1,102 @@
+  .contenedor-principal {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  
+  .fila {
+    display: flex;
+  }
+  
+  .celda {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .celda-valida {
+    background-color: #aaffaa;
+  }
+  
+  .celda-invalida {
+    background-color: red;
+  }
+  
+  
+  
+  .contenedor-tablero {
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .tablero-con-iconos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 700px;
+    height: 500px;
+    margin: 0 auto;
+  }
+  
+  
+  
+  .atacada {
+    background-color: #ADD8E6;
+    animation: onda 0.5s ease-out;
+  }
+  
+  @keyframes onda {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+  
+  .titulo-tablero {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+  }
+  
+  
+  @media screen and (max-width: 767px) {
+    .body-tablero {
+      padding-left: 5px;
+      margin-left: 0;
+      height: auto;
+    }
+  
+    .tablero-con-iconos {
+      width: 90%;
+      height: auto; 
+      margin-top: 20px;
+      flex-direction: column;
+    }
+  
+    .numeros-jugador {
+      flex-direction: column; 
+      align-items: flex-start; 
+    }
+    .contenedor-principal {
+      flex-direction: row;
+    }
+    .letras-container {
+      align-self: flex-end;
+    }
+  
+  }
+  
+  
+  

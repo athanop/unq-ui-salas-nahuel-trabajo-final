@@ -10,6 +10,7 @@ import Letras from '../molecules/Letras';
 import Numeros from '../molecules/Numeros';
 import RandomShip from '../molecules/RandomShip';
 import Jugadas from '../molecules/Jugadas';
+import TableroPlayer from '../organisms/TableroPlayer';
 
 const Tablero = () => {
   const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
@@ -287,35 +288,15 @@ const Tablero = () => {
                 <div className="titulo-tablero">Mi tablero</div>
                 <Numeros numeros={numeros} esJugador={esJugador} />
               </div>
-              {tableroJugador.map((fila, filaIndex) => (
-                <div key={filaIndex} className="fila">
-                  {fila.map((celda, celdaIndex) => (
-                    <div
-                      key={celdaIndex}
-                      className={`celda ${celdasValidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                        ? 'celda-valida'
-                        : ''} ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                          ? 'celda-invalida'
-                          : ''} ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''}`}
-                      onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}
-                      onDrop={(event) => handleDrop(event, filaIndex, celdaIndex)}
-                      onClick={() => {
-                        if (!juegoTerminado) {
-                          handleCellClick(filaIndex, celdaIndex, tableroJugador);
-                        }
-                      }}
-                    >
-                      {celda && celda.icono && (
-                        <img
-                          src={celda.icono}
-                          alt={`Ficha en Jugador ${filaIndex}-${celdaIndex}`}
-                          style={{ width: '30px', height: '30px' }}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ))}
+              <TableroPlayer
+                tableroJugador={tableroJugador}
+                celdasValidas={celdasValidas}
+                celdasInvalidas={celdasInvalidas}
+                juegoTerminado={juegoTerminado}
+                handleDragOver={handleDragOver}
+                handleDrop={handleDrop}
+                handleCellClick={handleCellClick}
+              />
             </div>
           </div>
           <div className="contenedor-principal">
