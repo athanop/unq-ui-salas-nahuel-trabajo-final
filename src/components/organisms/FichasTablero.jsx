@@ -24,7 +24,10 @@ const FichasTablero = ({
     flexDirection: orientacionIconos === 'horizontal' ? 'row' : 'column',
   };
 
-  const mostrarMensajeTurno = !ganador && !mostrarMensaje && !botonStartMostrado;
+  const mostrarMensajeTurno = !mostrarMensaje && !botonStartMostrado;
+  console.log("GANADOR", ganador)
+  console.log("MOSTRAR MENSAJE", mostrarMensaje)
+  console.log("BOTON DE START AL COMIENZO",botonStartMostrado)
 
   useEffect(() => {
     if (mostrarMensaje && !botonStartMostrado) {
@@ -81,14 +84,14 @@ const FichasTablero = ({
             </div>
           )}
           {ganador && ganador.length > 0 && (
-            <div className="mensaje-ganador">
-              <p>{ganador}</p>
-            </div>
-          )}
+          <div className="mensaje-ganador">
+            <p>{ganador}</p>
+          </div>
+        )}
         </div>
       )}
     </div>
-
+    
   );
 };
 

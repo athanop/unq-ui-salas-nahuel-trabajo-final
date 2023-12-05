@@ -68,9 +68,6 @@ const Tablero = () => {
     const barcosDestruidosJugador = verificarBarcosDestruidos(tableroJugador);
     const barcosDestruidosMaquina = verificarBarcosDestruidos(tableroMaquina);
 
-    console.log("Barcos destruidos en el tablero del jugador:", barcosDestruidosJugador);
-    console.log("Barcos destruidos en el tablero de la máquina:", barcosDestruidosMaquina);
-
     if (barcosDestruidosJugador) {
       setGanador('¡Tu oponente ganó la partida!');
       setJuegoTerminado(true);
@@ -361,7 +358,7 @@ const Tablero = () => {
           </div>
         </div>
       </div>
-      <div className='jugadas-cont'>
+      <div>
         <Jugadas
           movimientosJugador={movimientosJugador}
           movimientosMaquina={movimientosMaquina}
