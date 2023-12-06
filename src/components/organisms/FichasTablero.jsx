@@ -17,7 +17,8 @@ const FichasTablero = ({
   setMostrarMensaje,
   botonStartMostrado,
   setBotonStartMostrado,
-  ganador
+  ganador,
+  juegoTerminado
 }) => {
   const estiloIconos = {
     display: orientacionIconos === 'horizontal' ? 'flex' : 'block',
@@ -75,12 +76,12 @@ const FichasTablero = ({
               <p>¡Comienza la batalla!</p>
             </div>
           )}
-          {mostrarMensajeTurno && (
+          {!juegoTerminado && mostrarMensajeTurno && (
             <div className="mensaje">
               {turno ? <p>¡Derriba a tu oponente!</p> : <p>¡Es turno del oponente!</p>}
             </div>
           )}
-          {ganador && ganador.length > 0 && (
+          {ganador && ganador.length > 0 &&(
           <div className="mensaje-ganador">
             <p>{ganador}</p>
           </div>

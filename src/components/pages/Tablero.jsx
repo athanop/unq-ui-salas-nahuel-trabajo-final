@@ -13,6 +13,8 @@ import Jugadas from '../molecules/Jugadas';
 import TableroPlayer from '../organisms/TableroPlayer';
 
 const Tablero = () => {
+  const [contadorJugador1, setContadorJugador1] = useState(0);
+  const [contadorJugador2, setContadorJugador2] = useState(0);
   const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
   const [ganador, setGanador] = useState(null);
   const [juegoTerminado, setJuegoTerminado] = useState(false);
@@ -72,11 +74,13 @@ const Tablero = () => {
     if (barcosDestruidosJugador) {
       setGanador('¡Tu oponente ganó la partida!');
       setJuegoTerminado(true);
+      setContadorJugador2(contadorJugador2 + 1);
     } else if (barcosDestruidosMaquina) {
       setGanador('¡Ganaste la partida!');
       setJuegoTerminado(true);
+      setContadorJugador1(contadorJugador1 + 1);
     }
-  }, [tableroJugador, tableroMaquina, juegoTerminado]);
+  }, [tableroJugador, tableroMaquina, juegoTerminado,contadorJugador1, contadorJugador2]);
 
 
 
@@ -215,6 +219,7 @@ const Tablero = () => {
           nuevoTableroMaquina[filaIndex][celdaIndex] = { ...celda, atacada: true, explosion: true };
           setTableroMaquina(nuevoTableroMaquina);
           setMovimientosJugador([...movimientosJugador, { filaIndex, celdaIndex }]);
+          setTurnoJugador(false);
           setTimeout(() => {
             const movimientoMaquina = generarCeldaAleatoria();
             setMovimientosMaquina([...movimientosMaquina, movimientoMaquina]);
@@ -230,33 +235,66 @@ const Tablero = () => {
 
   const generarCeldaAleatoria = () => {
     let filaAleatoria, celdaAleatoria;
+    const nuevasCeldasSeleccionadas = new Set(celdasSeleccionadas);
+    let nuevoTableroJugador = JSON.parse(JSON.stringify(tableroJugador)); 
+  
     do {
-      filaAleatoria = Math.floor(Math.random() * tableroJugador.length);
-      celdaAleatoria = Math.floor(Math.random() * tableroJugador[filaAleatoria].length);
-    } while (celdasSeleccionadas.has(`${filaAleatoria},${celdaAleatoria}`));
-
-    const nuevoTableroJugador = [...tableroJugador];
-    if (!tableroJugador[filaAleatoria][celdaAleatoria]?.icono) {
+      filaAleatoria = Math.floor(Math.random() * nuevoTableroJugador.length);
+      celdaAleatoria = Math.floor(Math.random() * nuevoTableroJugador[filaAleatoria].length);
+    } while (nuevasCeldasSeleccionadas.has(`${filaAleatoria},${celdaAleatoria}`));
+  
+    if (!nuevoTableroJugador[filaAleatoria][celdaAleatoria]?.icono) {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { atacada: true };
     } else {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { icono: IconExplode };
     }
     setTableroJugador(nuevoTableroJugador);
-
-    const nuevasCeldasSeleccionadas = new Set(celdasSeleccionadas);
+  
     nuevasCeldasSeleccionadas.add(`${filaAleatoria},${celdaAleatoria}`);
     setCeldasSeleccionadas(nuevasCeldasSeleccionadas);
-
+  
     return { filaIndex: filaAleatoria, celdaIndex: celdaAleatoria };
   };
+  
 
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
-  console.log(esJugador)
+  
+
+  function calcularMensaje(contadorJugador1, contadorJugador2) {
+    let mensaje = '';
+  
+    if (contadorJugador1 > 0 && contadorJugador2 === 0) {
+      mensaje = `Ganaste ${contadorJugador1} - Tu oponente aún no ha ganado`;
+    } else if (contadorJugador2 > 0 && contadorJugador1 === 0) {
+      mensaje = `Aún no ganaste ninguna partida. - Tu oponente ganó ${contadorJugador2}`;
+    } else if (contadorJugador1 > 0 && contadorJugador2 > 0) {
+      mensaje = `Ganaste ${contadorJugador1} - Tu oponente ganó ${contadorJugador2}`;
+    } else {
+      mensaje = `Nadie ha ganado una partida aún.`;
+    }
+    return mensaje;
+  }
+  
+  const mensaje = calcularMensaje(contadorJugador1, contadorJugador2);
+
   return (
     <div className='body-tablero'>
+      <div className="contador-ganador">
+      <div>
+        <p>{mensaje}</p>
+      </div>
+    </div>
+    <div>
+        <Jugadas
+          movimientosJugador={movimientosJugador}
+          movimientosMaquina={movimientosMaquina}
+          letras={letras}
+          numeros={numeros}
+        />
+      </div>
       <div className="contenedor-tablero">
         <div className="tablero-con-iconos">
           <FichasTablero
@@ -280,6 +318,7 @@ const Tablero = () => {
             botonStartMostrado={botonStartMostrado}
             setBotonStartMostrado={setBotonStartMostrado}
             ganador={ganador}
+            juegoTerminado={juegoTerminado}
           />
           <div className="contenedor-principal">
             <Letras letras={letras} />
@@ -322,14 +361,6 @@ const Tablero = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <Jugadas
-          movimientosJugador={movimientosJugador}
-          movimientosMaquina={movimientosMaquina}
-          letras={letras}
-          numeros={numeros}
-        />
       </div>
     </div>
   );

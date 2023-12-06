@@ -90,6 +90,10 @@ button:disabled {
   color: #FFFFFF;
 }
 
+.mensaje-ganador p {
+  padding-left: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .iconos {
     transform: none; 
