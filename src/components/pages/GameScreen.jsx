@@ -11,8 +11,10 @@ import Numeros from '../molecules/Numeros';
 import RandomShip from '../molecules/RandomShip';
 import Jugadas from '../molecules/Jugadas';
 import TableroPlayer from '../organisms/TableroPlayer';
+import GameStatus from '../molecules/GameStatus';
 
-const Tablero = () => {
+
+const GameScreen = () => {
   const [contadorJugador1, setContadorJugador1] = useState(0);
   const [contadorJugador2, setContadorJugador2] = useState(0);
   const [celdasSeleccionadas, setCeldasSeleccionadas] = useState(new Set());
@@ -263,28 +265,14 @@ const Tablero = () => {
 
   
 
-  function calcularMensaje(contadorJugador1, contadorJugador2) {
-    let mensaje = '';
   
-    if (contadorJugador1 > 0 && contadorJugador2 === 0) {
-      mensaje = `Ganaste ${contadorJugador1} - Tu oponente aún no ha ganado`;
-    } else if (contadorJugador2 > 0 && contadorJugador1 === 0) {
-      mensaje = `Aún no ganaste ninguna partida. - Tu oponente ganó ${contadorJugador2}`;
-    } else if (contadorJugador1 > 0 && contadorJugador2 > 0) {
-      mensaje = `Ganaste ${contadorJugador1} - Tu oponente ganó ${contadorJugador2}`;
-    } else {
-      mensaje = `Nadie ha ganado una partida aún.`;
-    }
-    return mensaje;
-  }
   
-  const mensaje = calcularMensaje(contadorJugador1, contadorJugador2);
 
   return (
     <div className='body-tablero'>
       <div className="contador-ganador">
       <div>
-        <p>{mensaje}</p>
+        <GameStatus contadorJugador1={contadorJugador1} contadorJugador2={contadorJugador2}/>
       </div>
     </div>
     <div>
@@ -366,4 +354,4 @@ const Tablero = () => {
   );
 };
 
-export default Tablero;
+export default GameScreen;

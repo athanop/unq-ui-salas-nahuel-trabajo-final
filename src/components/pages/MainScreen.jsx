@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MainScreen.css';
 import { useNavigate } from 'react-router-dom';
-import Tablero from './Tablero';
+import GameScreen from './GameScreen';
 
 const MainScreen = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const MainScreen = () => {
 
   const goToTablero = () => {
     setJugarClicked(true);
-    navigate('/tablero');
+    navigate('/gamescreen');
   };
 
   return (
@@ -21,7 +21,7 @@ const MainScreen = () => {
         </div>
         <div className="tableros-container">
           <div className="tablero-container" key="jugador">
-            {jugarClicked && <Tablero />}
+            {jugarClicked && <GameScreen />}
           </div>
         </div>
       </div>

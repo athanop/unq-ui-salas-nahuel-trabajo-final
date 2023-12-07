@@ -41,6 +41,7 @@ const FichasTablero = ({
       {esJugador && (
         <div className="contenedor-iconos">
           <div className="icono-giro" onClick={() => cambiarOrientacion(orientacionIconos === 'horizontal' ? 'vertical' : 'horizontal')}>
+          Girar barco
             <img src={IconoGiro} alt="Cambiar orientación" />
           </div>
           {fichas.map((ficha, index) => (

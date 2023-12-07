@@ -24,13 +24,10 @@
   color: white;
 }
 
-.icono-giro img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 5px;
-}
-
 .icono-giro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
   margin-top: 10px;
@@ -44,6 +41,18 @@
   opacity: 0.3;
   transition: opacity 0.2s ease;
 }
+
+.icono-giro img {
+  width: 24px;
+  height: 24px;
+  margin-left: 10px; 
+}
+
+.texto-izquierda {
+  flex-grow: 1;
+  margin-right: 10px; 
+}
+
 
 button {
   width: 60px;
