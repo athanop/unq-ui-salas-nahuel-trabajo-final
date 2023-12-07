@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Tablero.css';
+import './GameScreen.css';
 import IconPortaAviones from '../atoms/portaaviones.png';
 import IconCrucero from '../atoms/crucero.png';
 import IconLancha from '../atoms/lancha.png';

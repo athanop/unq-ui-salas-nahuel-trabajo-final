@@ -1,6 +1,7 @@
 import React from 'react';
 import './TableroPlayer.css'
 
+
 function TableroPlayer({
     tableroJugador,
     esJugador,
@@ -59,3 +60,6 @@ function TableroPlayer({
 }
 
 export default TableroPlayer;
+
+
+
