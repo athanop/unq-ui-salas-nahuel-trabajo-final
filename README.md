@@ -1,3 +1,7 @@
+## Para jugar sin realizar la descarga e instalación, se puede acceder al siguiente link:
+
+https://athanop.github.io/unq-ui-salas-nahuel-trabajo-final/
+
 ## Cómo descargar e instalar el proyecto:
 
 Antes que nada, hay que tener instalado Node y npm.
