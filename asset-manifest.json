@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.abd2cb36.css",
-    "main.js": "/unq-ui-salas-nahuel-trabajo-final/static/js/main.9fdec562.js",
-    "static/js/787.98531b5e.chunk.js": "/unq-ui-salas-nahuel-trabajo-final/static/js/787.98531b5e.chunk.js",
-    "static/media/fondo.jpg": "/unq-ui-salas-nahuel-trabajo-final/static/media/fondo.fb913be14d1b134857e7.jpg",
-    "static/media/tableroarg.jpg": "/unq-ui-salas-nahuel-trabajo-final/static/media/tableroarg.1a37ded86a8b573030f7.jpg",
-    "static/media/portaaviones.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/portaaviones.51a66bc6141b5ed186e5.png",
-    "static/media/explode.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/explode.13c345804c35efc5fc1b.png",
-    "static/media/crucero.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/crucero.da8d0dea4a4dd8747418.png",
-    "static/media/olas.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/olas.9021aeaa1db13f4617c0.png",
-    "static/media/submarino.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/submarino.5b46a116929533e9a371.png",
-    "static/media/rotate.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/rotate.8d2c6e57a9a230291813.png",
-    "static/media/lancha.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/lancha.94800c9e071de8d0c2b6.png",
-    "index.html": "/unq-ui-salas-nahuel-trabajo-final/index.html",
-    "main.abd2cb36.css.map": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.abd2cb36.css.map",
-    "main.9fdec562.js.map": "/unq-ui-salas-nahuel-trabajo-final/static/js/main.9fdec562.js.map",
-    "787.98531b5e.chunk.js.map": "/unq-ui-salas-nahuel-trabajo-final/static/js/787.98531b5e.chunk.js.map"
+    "main.css": "/static/css/main.d0b5d8dd.css",
+    "main.js": "/static/js/main.a605b898.js",
+    "static/js/787.98531b5e.chunk.js": "/static/js/787.98531b5e.chunk.js",
+    "static/media/fondo.jpg": "/static/media/fondo.fb913be14d1b134857e7.jpg",
+    "static/media/tableroarg.jpg": "/static/media/tableroarg.1a37ded86a8b573030f7.jpg",
+    "static/media/portaaviones.png": "/static/media/portaaviones.51a66bc6141b5ed186e5.png",
+    "static/media/explode.png": "/static/media/explode.13c345804c35efc5fc1b.png",
+    "static/media/crucero.png": "/static/media/crucero.da8d0dea4a4dd8747418.png",
+    "static/media/olas.png": "/static/media/olas.9021aeaa1db13f4617c0.png",
+    "static/media/submarino.png": "/static/media/submarino.5b46a116929533e9a371.png",
+    "static/media/rotate.png": "/static/media/rotate.8d2c6e57a9a230291813.png",
+    "static/media/lancha.png": "/static/media/lancha.94800c9e071de8d0c2b6.png",
+    "index.html": "/index.html",
+    "main.d0b5d8dd.css.map": "/static/css/main.d0b5d8dd.css.map",
+    "main.a605b898.js.map": "/static/js/main.a605b898.js.map",
+    "787.98531b5e.chunk.js.map": "/static/js/787.98531b5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.abd2cb36.css",
-    "static/js/main.9fdec562.js"
+    "static/css/main.d0b5d8dd.css",
+    "static/js/main.a605b898.js"
   ]
 }
