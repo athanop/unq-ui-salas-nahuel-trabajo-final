@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.abd2cb36.css",
+    "main.css": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.47651dd1.css",
     "main.js": "/unq-ui-salas-nahuel-trabajo-final/static/js/main.35be6949.js",
     "static/js/787.98531b5e.chunk.js": "/unq-ui-salas-nahuel-trabajo-final/static/js/787.98531b5e.chunk.js",
     "static/media/fondo.jpg": "/unq-ui-salas-nahuel-trabajo-final/static/media/fondo.fb913be14d1b134857e7.jpg",
@@ -13,12 +13,12 @@
     "static/media/rotate.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/rotate.8d2c6e57a9a230291813.png",
     "static/media/lancha.png": "/unq-ui-salas-nahuel-trabajo-final/static/media/lancha.94800c9e071de8d0c2b6.png",
     "index.html": "/unq-ui-salas-nahuel-trabajo-final/index.html",
-    "main.abd2cb36.css.map": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.abd2cb36.css.map",
+    "main.47651dd1.css.map": "/unq-ui-salas-nahuel-trabajo-final/static/css/main.47651dd1.css.map",
     "main.35be6949.js.map": "/unq-ui-salas-nahuel-trabajo-final/static/js/main.35be6949.js.map",
     "787.98531b5e.chunk.js.map": "/unq-ui-salas-nahuel-trabajo-final/static/js/787.98531b5e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.abd2cb36.css",
+    "static/css/main.47651dd1.css",
     "static/js/main.35be6949.js"
   ]
 }
