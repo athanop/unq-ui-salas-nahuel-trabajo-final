@@ -5,7 +5,7 @@ import MainScreen from "./components/pages/MainScreen";
 import GameScreen from "./components/pages/GameScreen";
 
 const App = () => {
-  
+
   return (
     <BrowserRouter>
       <Routes>

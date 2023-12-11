@@ -41,7 +41,7 @@ const FichasTablero = ({
       {esJugador && (
         <div className="contenedor-iconos">
           <div className="icono-giro" onClick={() => cambiarOrientacion(orientacionIconos === 'horizontal' ? 'vertical' : 'horizontal')}>
-          Girar barco
+            Girar barco
             <img src={IconoGiro} alt="Cambiar orientación" />
           </div>
           {fichas.map((ficha, index) => (
@@ -82,15 +82,15 @@ const FichasTablero = ({
               {turno ? <p>¡Derriba a tu oponente!</p> : <p>¡Es turno del oponente!</p>}
             </div>
           )}
-          {ganador && ganador.length > 0 &&(
-          <div className="mensaje-ganador">
-            <p>{ganador}</p>
-          </div>
-        )}
+          {ganador && ganador.length > 0 && (
+            <div className="mensaje-ganador">
+              <p>{ganador}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
-    
+
   );
 };
 

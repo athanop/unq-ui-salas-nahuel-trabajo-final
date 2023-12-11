@@ -31,8 +31,8 @@ function TableroPlayer({
                                     ? 'celda-valida'
                                     : ''
                                     } ${celdasInvalidas.some((c) => c.fila === filaIndex && c.celda === celdaIndex)
-                                    ? 'celda-invalida'
-                                    : ''
+                                        ? 'celda-invalida'
+                                        : ''
                                     } ${!celda?.icono && celda?.atacada ? 'atacada' : ''} ${celda?.explosion ? 'explosion' : ''
                                     }`}
                                 onDragOver={(event) => handleDragOver(event, filaIndex, celdaIndex)}

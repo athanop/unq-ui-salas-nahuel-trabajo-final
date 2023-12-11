@@ -82,7 +82,7 @@ const GameScreen = () => {
       setJuegoTerminado(true);
       setContadorJugador1(contadorJugador1 + 1);
     }
-  }, [tableroJugador, tableroMaquina, juegoTerminado,contadorJugador1, contadorJugador2]);
+  }, [tableroJugador, tableroMaquina, juegoTerminado, contadorJugador1, contadorJugador2]);
 
 
 
@@ -238,44 +238,44 @@ const GameScreen = () => {
   const generarCeldaAleatoria = () => {
     let filaAleatoria, celdaAleatoria;
     const nuevasCeldasSeleccionadas = new Set(celdasSeleccionadas);
-    let nuevoTableroJugador = JSON.parse(JSON.stringify(tableroJugador)); 
-  
+    let nuevoTableroJugador = JSON.parse(JSON.stringify(tableroJugador));
+
     do {
       filaAleatoria = Math.floor(Math.random() * nuevoTableroJugador.length);
       celdaAleatoria = Math.floor(Math.random() * nuevoTableroJugador[filaAleatoria].length);
     } while (nuevasCeldasSeleccionadas.has(`${filaAleatoria},${celdaAleatoria}`));
-  
+
     if (!nuevoTableroJugador[filaAleatoria][celdaAleatoria]?.icono) {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { atacada: true };
     } else {
       nuevoTableroJugador[filaAleatoria][celdaAleatoria] = { icono: IconExplode };
     }
     setTableroJugador(nuevoTableroJugador);
-  
+
     nuevasCeldasSeleccionadas.add(`${filaAleatoria},${celdaAleatoria}`);
     setCeldasSeleccionadas(nuevasCeldasSeleccionadas);
-  
+
     return { filaIndex: filaAleatoria, celdaIndex: celdaAleatoria };
   };
-  
+
 
 
   const letras = Array.from({ length: tableroJugador.length }, (_, index) => String.fromCharCode(65 + index));
   const numeros = Array.from({ length: tableroJugador[0].length }, (_, index) => index + 1);
 
-  
 
-  
-  
+
+
+
 
   return (
     <div className='body-tablero'>
       <div className="contador-ganador">
-      <div>
-        <GameStatus contadorJugador1={contadorJugador1} contadorJugador2={contadorJugador2}/>
+        <div>
+          <GameStatus contadorJugador1={contadorJugador1} contadorJugador2={contadorJugador2} />
+        </div>
       </div>
-    </div>
-    <div>
+      <div>
         <Jugadas
           movimientosJugador={movimientosJugador}
           movimientosMaquina={movimientosMaquina}
